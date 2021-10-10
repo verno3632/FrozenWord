@@ -3,7 +3,7 @@ package jp.developer.retia.frozenword.db
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import jp.developer.retia.frozenword.model.Habbit
-import jp.developer.retia.frozenword.model.Task
+import jp.developer.retia.frozenword.model.HabbitAndLog
 
 @Dao
 interface HabbitDao {
@@ -18,5 +18,9 @@ interface HabbitDao {
 
     @Delete
     fun delete(habbit: Habbit)
+
+    @Transaction
+    @Query("SELECT * FROM Habbit")
+    fun getHabbitAndLogs(): List<HabbitAndLog>
 }
 

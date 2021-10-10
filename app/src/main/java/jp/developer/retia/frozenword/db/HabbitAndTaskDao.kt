@@ -2,7 +2,6 @@ package jp.developer.retia.frozenword.db
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import jp.developer.retia.frozenword.model.HabbitAndTask
 import java.util.*
 
 //@Dao
