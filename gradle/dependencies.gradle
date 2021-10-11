@@ -1,0 +1,14 @@
+ext {
+    androidxVersion = '1.6.0'
+    composeVersion = '1.0.0-rc02'
+}
+ext.libs = [
+        androidx : [
+                core : "androidx.core:core-ktx:$androidxVersion",
+        ],
+        compose : [
+                ui : "androidx.compose.ui:ui:$composeVersion",
+                uitooling : "androidx.compose.ui:ui-tooling:$composeVersion",
+                material : "androidx.compose.material:material:$composeVersion",
+        ]
+]

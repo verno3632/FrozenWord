@@ -1,47 +1,49 @@
-package jp.developer.retia.frozenword
+package jp.developer.retia.frozenword.ui.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import jp.developer.retia.frozenword.ui.activity.AddHabbitActivity
+import jp.developer.retia.frozenword.MainActivity
+import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
+import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitUiState
+import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class AddHabbitActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: AddHabbitViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        startActivity(AddHabbitActivity.createIntent(this))
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.uiState.collect { uiState ->
                     when (uiState) {
-//                        is MainUiState.Success -> showTasks(uiState.tasks)
+                        is AddHabbitUiState.HabbitTitlePage -> show1stPane(
+                            uiState.title,
+                            uiState.sampleTitle
+                        )
+                        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
+                        is AddHabbitUiState.TitlePage -> TODO()
                     }
                 }
             }
@@ -49,24 +51,54 @@ class MainActivity : ComponentActivity() {
 
     }
 
-//    private fun showTasks(tasks: List<Task>) {
-//        setContent {
-//            FrozenWordTheme {
-//                // A surface container using the 'background' color from the theme
-//                Surface(color = MaterialTheme.colors.background) {
-//                    Sample((0 until 10).map { tasks }) { task, checked ->
-//                        mainViewModel.onChangedCheckBox(
-//                            task,
-//                            checked
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private fun show1stPane(defaultTitle: String, sampleTitles: List<String>) {
+        setContent {
+            var title: String by remember { mutableStateOf(defaultTitle) }
+            FrozenWordTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    FirstPane(title = title, sampleTitles = sampleTitles, {
+                        title = it
+                        mainViewModel.onHabbitTitleUpdated(title)
+                    }, {
+                        mainViewModel.onHabbitTitleNextButtonClicked()
+                    })
+                }
+            }
+        }
+    }
 
     companion object {
         fun createIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
+    }
+}
+
+@Preview
+@Composable
+fun PreviewFirstPane() {
+    FrozenWordTheme {
+        Surface {
+            FirstPane(title = "hogehoge", sampleTitles = emptyList())
+        }
+    }
+}
+
+@Composable
+fun FirstPane(
+    title: String,
+    sampleTitles: List<String>,
+    onTitleChanged: (String) -> Unit = {},
+    onTitleNextButtonClicked: () -> Unit = {},
+) {
+    Column {
+        Text("Label")
+        OutlinedTextField(
+            value = title,
+            onValueChange = onTitleChanged
+        )
+        Button(onClick = onTitleNextButtonClicked) {
+            Text("次へ")
+        }
     }
 }
 
