@@ -24,7 +24,7 @@ object HabbitRepositorySpec : Spek({
         }
 
         it("dummyHabbitsが渡される") {
-            coVerify(exactly = 0) {
+            coVerify {
                 mockHabbitDao.insertAll(dummyHabbit)
             }
         }
