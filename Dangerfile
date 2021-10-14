@@ -62,4 +62,5 @@ else
   markdown comment + " (But **#{lint_warning_count}** warnings reported by Android Lint and ktlint.)"
 end
 
+system("./gradlew ktlintFormat")
 suggester.suggest
