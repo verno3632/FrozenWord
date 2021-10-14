@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddHabbitViewModel @Inject constructor(
     private val habbitRepository: HabbitRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private var habbitTitle: String = ""
     private var shortHabbitTitle: String = ""
