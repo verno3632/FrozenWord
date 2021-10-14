@@ -14,7 +14,6 @@ object HabbitRepositorySpec : Spek({
     val mockHabbitDao by memoized { mockk<HabbitDao>(relaxUnitFun = true) }
     val habbitRepository by memoized { HabbitRepository(mockHabbitDao) }
 
-
     describe("insertAll") {
         val dummyHabbit = mockk<Habbit>()
         beforeEachTest {
