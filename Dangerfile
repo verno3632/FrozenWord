@@ -23,7 +23,7 @@ end
 android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
 android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
 android_lint.lint(inline_mode: true) # コードにインラインでコメントする
-Dir.glob("**/build/reports/lint-results*.xml").each { |report|
+Dir.glob("**/build/reports/lint-results-debug.xml").each { |report|
   android_lint.report_file = report.to_s
 }
 
