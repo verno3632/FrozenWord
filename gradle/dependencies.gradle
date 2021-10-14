@@ -16,7 +16,7 @@ ext {
     androidxJunitVersion = '1.1.2'
     espressoVersion = '3.3.0'
     spekVersion = '2.0.17'
-    junit5Version = '5.8.0'
+    junit5Version = '5.8.1'
     androidJunit5Version = '1.8.0.0'
     mockkVersion = '1.12.0'
 }
