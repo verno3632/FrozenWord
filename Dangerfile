@@ -10,18 +10,23 @@ github.dismiss_out_of_range_messages({
 })
 
 # ktlint の結果ファイルの解析とコメント
-Dir.glob("**/build/reports/ktlint-results.xml").each { |report|
-  checkstyle_format.base_path = Dir.pwd
-  checkstyle_format.report report.to_s
-}
+begin
+  checkstyle_reports.inline_comment=true
+  checkstyle_reports.report_method=:warn
+
+  Dir.glob("**/ktlint*Check.xml").each do |xml|
+    checkstyle_reports.report(xml, modified_files_only: true)
+  end
+end
 
 # Android Lint の結果ファイルの解析とコメント
-Dir.glob("**/build/reports/lint-results*.xml").each { |report|
-  android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
-  android_lint.report_file = report.to_s
-  android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
-  android_lint.lint(inline_mode: true) # コードにインラインでコメントする
-}
+android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
+android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
+Dir.glob("**/lint-results*.xml").each do |xml|
+    android_lint.report_file=xml
+    android_lint.lint(inline_mode: true)
+end
+
 
 # 最終結果でレポートするワーニング数は Android Lint と ktlint のみの合計としたいのでここで変数に保存
 lint_warning_count = status_report[:warnings].count
@@ -56,3 +61,6 @@ else
   # ktlint と Android Lint のワーニング数の合計をレポート
   markdown comment + " (But **#{lint_warning_count}** warnings reported by Android Lint and ktlint.)"
 end
+
+system("./gradlew ktlintFormat")
+suggester.suggest
