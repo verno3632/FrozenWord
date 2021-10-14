@@ -56,3 +56,5 @@ else
   # ktlint と Android Lint のワーニング数の合計をレポート
   markdown comment + " (But **#{lint_warning_count}** warnings reported by Android Lint and ktlint.)"
 end
+
+suggester.suggest
