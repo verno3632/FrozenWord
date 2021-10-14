@@ -1,13 +1,13 @@
 package jp.developer.retia.frozenword.db
 
-//import androidx.room.*
-//import androidx.room.OnConflictStrategy.REPLACE
-//import jp.developer.retia.frozenword.model.HabbitAndTask
-//import jp.developer.retia.frozenword.model.Task
-//import java.util.*
+// import androidx.room.*
+// import androidx.room.OnConflictStrategy.REPLACE
+// import jp.developer.retia.frozenword.model.HabbitAndTask
+// import jp.developer.retia.frozenword.model.Task
+// import java.util.*
 //
-//@Dao
-//interface TaskDao {
+// @Dao
+// interface TaskDao {
 //    @Query("SELECT * FROM task")
 //    suspend fun getAll(): List<Task>
 //
@@ -27,5 +27,5 @@ package jp.developer.retia.frozenword.db
 //
 //    @Delete
 //    suspend fun delete(task: Task)
-//}
+// }
 //

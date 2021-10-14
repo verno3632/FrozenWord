@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
     }
 
 //    private fun showTasks(tasks: List<Task>) {
@@ -70,14 +69,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//@Composable
-//fun ListItem(task: Task, onChangedCheckbox: (Task, Boolean) -> Unit) {
+// @Composable
+// fun ListItem(task: Task, onChangedCheckbox: (Task, Boolean) -> Unit) {
 //    val checkedState = remember { mutableStateOf(task.checked) }
 //    ListItem(task.oldHabbit.title, checkedState.value, onCheckedChanged = {
 //        checkedState.value = it
 //        onChangedCheckbox(task, it)
 //    })
-//}
+// }
 
 @Composable
 fun ListItem(text: String, checkedState: Boolean, onCheckedChanged: (Boolean) -> Unit) {
@@ -97,27 +96,27 @@ fun ListItem(text: String, checkedState: Boolean, onCheckedChanged: (Boolean) ->
     }
 }
 
-//@Composable
-//fun TaskList(tasks: List<Task>, onChangedCheckbox: (Task, Boolean) -> Unit) {
+// @Composable
+// fun TaskList(tasks: List<Task>, onChangedCheckbox: (Task, Boolean) -> Unit) {
 //    LazyColumn {
 //        items(tasks, { it.oldHabbit.id.hashCode() }) { task ->
 //            ListItem(task, onChangedCheckbox)
 //        }
 //    }
-//}
+// }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
+// @Preview(showBackground = true)
+// @Composable
+// fun DefaultPreview() {
 //    Sample(
 //        listOf(listOf(Task(Date(), false, OldHabbit("hogehoge"))))
 //
 //
 //    ) { task, checked -> }
-//}
+// }
 
-//@Composable
-//private fun Sample(tasksList: List<List<Task>>, onChangedCheckbox: (Task, Boolean) -> Unit) {
+// @Composable
+// private fun Sample(tasksList: List<List<Task>>, onChangedCheckbox: (Task, Boolean) -> Unit) {
 //    val navController = rememberNavController()
 //    Scaffold(
 //        topBar = {
@@ -130,24 +129,24 @@ fun ListItem(text: String, checkedState: Boolean, onCheckedChanged: (Boolean) ->
 //
 //    ) {
 //        TaskList(tasksList[0], onChangedCheckbox)
-////        Column(Modifier.fillMaxSize()) {
-////            // Display 10 items
-////            val pagerState = rememberPagerState(
-////                pageCount = tasksList.size,
-////                // We increase the offscreen limit, to allow pre-loading of images
-////                initialOffscreenLimit = 2,
-////                infiniteLoop = true,
-////            )
-////
-////            HorizontalPager(
-////                state = pagerState,
-////                // Add some horizontal spacing between items
-////                itemSpacing = 4.dp,
-////                modifier = Modifier
-////                    .weight(1f)
-////                    .fillMaxWidth()
-////            ) { page ->
-////            }
-////        }
+// //        Column(Modifier.fillMaxSize()) {
+// //            // Display 10 items
+// //            val pagerState = rememberPagerState(
+// //                pageCount = tasksList.size,
+// //                // We increase the offscreen limit, to allow pre-loading of images
+// //                initialOffscreenLimit = 2,
+// //                infiniteLoop = true,
+// //            )
+// //
+// //            HorizontalPager(
+// //                state = pagerState,
+// //                // Add some horizontal spacing between items
+// //                itemSpacing = 4.dp,
+// //                modifier = Modifier
+// //                    .weight(1f)
+// //                    .fillMaxWidth()
+// //            ) { page ->
+// //            }
+// //        }
 //    }
-//}
+// }

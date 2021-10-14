@@ -2,10 +2,10 @@ package jp.developer.retia.frozenword.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
 @HiltViewModel
 class AddHabbitViewModel @Inject constructor(
@@ -32,22 +32,17 @@ class AddHabbitViewModel @Inject constructor(
     }
 
     fun onHabbitTitleNextButtonClicked() {
-
     }
 
     fun onShortHabbitTitleNextButtonClicked() {
-
     }
 
     fun onSkipButtonClicked() {
-
     }
 
     fun onClickedOkButton() {
-
     }
 }
-
 
 sealed class AddHabbitUiState {
     data class HabbitTitlePage(val title: String, val sampleTitle: List<String>) :
