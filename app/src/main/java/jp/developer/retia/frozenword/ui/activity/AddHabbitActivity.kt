@@ -68,7 +68,7 @@ class AddHabbitActivity : ComponentActivity() {
     }
 
     companion object {
-        fun createIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
+        fun createIntent(context: Context): Intent = Intent(context, AddHabbitActivity::class.java)
     }
 }
 

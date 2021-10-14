@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -47,7 +48,26 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion composeVersion
-        kotlinCompilerVersion '1.4.32'
+        kotlinCompilerVersion kotlinVersion
+    }
+
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
+            jacocoOptions {
+                // here goes all jacoco config, for example
+                html.enabled = true
+                xml.enabled = false
+                csv.enabled = false
+            }
+        }
+        unitTests.all {
+            testLogging.events = ["passed", "skipped", "failed"]
+        }
     }
 }
 
@@ -70,7 +90,21 @@ dependencies {
     implementation libs.room.ktx
     kapt libs.room.compiler
 
-    testImplementation libs.junit
+    implementation libs.kotlin.stdlib
+
+    implementation platform(libs.coroutines.bom)
+    implementation libs.coroutines.android
+    testImplementation libs.coroutines.test
+
+    testImplementation libs.mockk.mockk
+    testImplementation libs.mockk.jvm
+    testImplementation libs.truth
+
+    testImplementation libs.spek.jvm
+    testRuntimeOnly libs.spek.runner
+    testImplementation libs.kotlin.reflect
+    testImplementation libs.junit5.api
+    testRuntimeOnly libs.junit5.engine
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso
     androidTestImplementation libs.compose.junit
