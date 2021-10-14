@@ -22,10 +22,11 @@ end
 # Android Lint の結果ファイルの解析とコメント
 android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
 android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
-android_lint.lint(inline_mode: true) # コードにインラインでコメントする
-Dir.glob("**/build/reports/lint-results-debug.xml").each { |report|
-  android_lint.report_file = report.to_s
-}
+Dir.glob("**/lint-results*.xml").each do |xml|
+    android_lint.report_file=xml
+    android_lint.lint(inline_mode: true)
+end
+
 
 # 最終結果でレポートするワーニング数は Android Lint と ktlint のみの合計としたいのでここで変数に保存
 lint_warning_count = status_report[:warnings].count
