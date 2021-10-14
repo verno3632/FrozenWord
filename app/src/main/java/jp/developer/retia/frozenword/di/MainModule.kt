@@ -7,9 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import jp.developer.retia.frozenword.db.AppDatabase
 import jp.developer.retia.frozenword.db.HabbitDao
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,12 +1,12 @@
 package jp.developer.retia.frozenword.repository
 
-//import jp.developer.retia.frozenword.db.TaskDao
-//import jp.developer.retia.frozenword.model.HabbitAndTask
-//import jp.developer.retia.frozenword.model.Task
-//import java.util.*
-//import javax.inject.Inject
+// import jp.developer.retia.frozenword.db.TaskDao
+// import jp.developer.retia.frozenword.model.HabbitAndTask
+// import jp.developer.retia.frozenword.model.Task
+// import java.util.*
+// import javax.inject.Inject
 //
-//class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
+// class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 //
 //    suspend fun insertAll(tasks: List<Task>) {
 //        taskDao.insertAll(* tasks.toTypedArray())
@@ -31,4 +31,4 @@ package jp.developer.retia.frozenword.repository
 //    suspend fun getTasksByDate(date: Date): List<Task> {
 //        return taskDao.getTasksByDate(date)
 //    }
-//}
+// }

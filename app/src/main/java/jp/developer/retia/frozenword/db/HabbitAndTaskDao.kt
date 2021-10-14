@@ -1,11 +1,10 @@
 package jp.developer.retia.frozenword.db
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.REPLACE
 import java.util.*
 
-//@Dao
-//interface HabbitAndTaskDao {
+// @Dao
+// interface HabbitAndTaskDao {
 //    @Transaction
 //    @Query("SELECT * FROM User")
 //    fun getUsersWithPlaylists(): List<UserWithPlaylists>
@@ -20,5 +19,5 @@ import java.util.*
 //
 //    @Delete
 //    fun delete(task: HabbitAndTask)
-//}
+// }
 //

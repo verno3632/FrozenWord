@@ -8,7 +8,6 @@ import android.provider.Browser
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 
-
 class FrozenWordAccessibilityService : AccessibilityService() {
     override fun onInterrupt() {
     }
@@ -38,14 +37,14 @@ class FrozenWordAccessibilityService : AccessibilityService() {
         val capturedUrl = captureUrl(parentNodeInfo, browserConfig)
         parentNodeInfo.recycle()
 
-        //we can't find a url. Browser either was updated or opened page without url text field
+        // we can't find a url. Browser either was updated or opened page without url text field
         capturedUrl ?: return
 
         val eventTime = event.eventTime
         val detectionId = "$packageName, and url $capturedUrl"
         val lastRecordedTime =
             if (previousUrlDetections.containsKey(detectionId)) previousUrlDetections[detectionId]!! else 0
-        //some kind of redirect throttling
+        // some kind of redirect throttling
         if (eventTime - lastRecordedTime > 2000) {
             previousUrlDetections[detectionId] = eventTime
             analyzeCapturedUrl(capturedUrl, browserConfig.packageName)

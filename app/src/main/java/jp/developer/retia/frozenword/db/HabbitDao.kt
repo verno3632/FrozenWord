@@ -23,4 +23,3 @@ interface HabbitDao {
     @Query("SELECT * FROM Habbit")
     fun getHabbitAndLogs(): List<HabbitAndLog>
 }
-
