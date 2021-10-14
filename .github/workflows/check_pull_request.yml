@@ -4,7 +4,7 @@ on: pull_request
 
 env:
   # 実行する Gradle コマンド(プロジェクトによって調整してください。)
-  GRADLE_KTLINT_TASK: 'ktlint'
+  GRADLE_KTLINT_TASK: 'ktlintCheck'
   GRADLE_ANDROID_LINT_TASK: 'lintDebug'
   GRADLE_UNIT_TEST_TASK: 'testDebugUnitTest'
 
@@ -59,4 +59,4 @@ jobs:
           JOB_STATUS: ${{ job.status }} # jobのステータスを Danger へ受け渡す
         run: |
           gem install ${{ steps.gem-info.outputs.packages }}
-          danger --dangerfile='.github/workflows/check-pull-request.danger' --remove-previous-comments --fail-on-errors=true
+          danger --remove-previous-comments --fail-on-errors=true
