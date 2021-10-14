@@ -10,17 +10,19 @@ github.dismiss_out_of_range_messages({
 })
 
 # ktlint の結果ファイルの解析とコメント
+checkstyle_format.base_path = Dir.pwd
+checkstyle_reports.inline_comment=true
+checkstyle_reports.report_method=:warn
 Dir.glob("**/build/reports/ktlint/*.xml").each { |report|
-  checkstyle_format.base_path = Dir.pwd
-  checkstyle_format.report report.to_s
+  checkstyle_format.report(report.to_s, modified_files_only: true)
 }
 
 # Android Lint の結果ファイルの解析とコメント
+android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
+android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
+android_lint.lint(inline_mode: true) # コードにインラインでコメントする
 Dir.glob("**/build/reports/lint-results*.xml").each { |report|
-  android_lint.skip_gradle_task = true # 既にある結果ファイルを利用する
   android_lint.report_file = report.to_s
-  android_lint.filtering = false # エラーは追加・変更したファイルでなくてもコメント
-  android_lint.lint(inline_mode: true) # コードにインラインでコメントする
 }
 
 # 最終結果でレポートするワーニング数は Android Lint と ktlint のみの合計としたいのでここで変数に保存
