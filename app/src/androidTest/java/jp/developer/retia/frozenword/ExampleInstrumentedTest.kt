@@ -1,22 +1,25 @@
 package jp.developer.retia.frozenword
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.*
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.performTextInput
+import jp.developer.retia.frozenword.ui.activity.AddHabbitActivity
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
  * Instrumented test, which will execute on an Android device.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<AddHabbitActivity>()
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("jp.developer.retia.frozenword", appContext.packageName)
+    fun MyTest() {
+        composeTestRule.onNode(hasSetTextAction()).performTextInput("hogehoge")
+        composeTestRule.onNode(hasText("hogehoge")).assertExists()
     }
 }
