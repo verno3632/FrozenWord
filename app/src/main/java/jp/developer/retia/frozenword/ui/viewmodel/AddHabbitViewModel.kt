@@ -1,11 +1,12 @@
 package jp.developer.retia.frozenword.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import jp.developer.retia.frozenword.repository.HabbitRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AddHabbitViewModel @Inject constructor(
@@ -16,11 +17,26 @@ class AddHabbitViewModel @Inject constructor(
     private var shortHabbitTitle: String = ""
     private var trigger: String? = null
 
-    private val _uiState = MutableStateFlow(AddHabbitUiState.HabbitTitlePage("", emptyList()))
-    val uiState: StateFlow<AddHabbitUiState> = _uiState
+    private val titleSuggestion = emptyList<String>()
+
+    private val _uiState =
+        MutableStateFlow(AddHabbitUiState.HabbitTitlePage("", titleSuggestion, false))
+    val uiState: StateFlow<AddHabbitUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<AddHabbitEvent>()
+    val events: SharedFlow<AddHabbitEvent> = _events.asSharedFlow()
 
     fun onHabbitTitleUpdated(habbitTitle: String) {
         this.habbitTitle = habbitTitle
+        viewModelScope.launch {
+            _uiState.emit(
+                AddHabbitUiState.HabbitTitlePage(
+                    habbitTitle,
+                    titleSuggestion,
+                    habbitTitle.isNotEmpty()
+                )
+            )
+        }
     }
 
     fun onShortHabbitTitleUpdated(shortHabbitTitle: String) {
@@ -32,6 +48,10 @@ class AddHabbitViewModel @Inject constructor(
     }
 
     fun onHabbitTitleNextButtonClicked() {
+        viewModelScope.launch {
+            habbitRepository.insert(title = habbitTitle, shortHabbitTitle = shortHabbitTitle)
+            _events.emit(AddHabbitEvent.Back)
+        }
     }
 
     fun onShortHabbitTitleNextButtonClicked() {
@@ -42,14 +62,24 @@ class AddHabbitViewModel @Inject constructor(
 
     fun onClickedOkButton() {
     }
+
+    fun onSuggestionHabbitTitleClicked(title: String) {
+    }
 }
 
 sealed class AddHabbitUiState {
-    data class HabbitTitlePage(val title: String, val sampleTitle: List<String>) :
-        AddHabbitUiState()
+    data class HabbitTitlePage(
+        val title: String,
+        val sampleTitle: List<String>,
+        val enableButton: Boolean
+    ) : AddHabbitUiState()
 
     data class ShortHabbitTitlePage(val title: String, val sampleTItles: List<String>) :
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()
+}
+
+sealed class AddHabbitEvent {
+    object Back : AddHabbitEvent()
 }
