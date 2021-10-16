@@ -1,11 +1,14 @@
 package jp.developer.retia.frozenword.repository
 
-import javax.inject.Inject
 import jp.developer.retia.frozenword.db.HabbitDao
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
+import javax.inject.Inject
 
 class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
+    suspend fun insert(title: String, shortHabbitTitle: String) {
+        habbitDao.insertAll(Habbit(title = title, shortHabbitTitle = shortHabbitTitle))
+    }
 
     suspend fun insertAll(habbits: List<Habbit>) {
         habbitDao.insertAll(* habbits.toTypedArray())
