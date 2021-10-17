@@ -52,6 +52,13 @@ jobs:
         run: ./gradlew $GRADLE_ANDROID_LINT_TASK
       - name: Run Unit Test
         run: ./gradlew $GRADLE_UNIT_TEST_TASK
+      - name: Run instrumentation tests
+        uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
+          with:
+            cmd: ./gradlew connectedCheck --stacktrace
+            api: 25
+            tag: default
+            abi: x86
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
