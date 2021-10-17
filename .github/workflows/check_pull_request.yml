@@ -52,6 +52,7 @@ jobs:
         run: ./gradlew $GRADLE_ANDROID_LINT_TASK
       - name: Run Unit Test
         run: ./gradlew $GRADLE_UNIT_TEST_TASK
+      - uses: malinskiy/action-android/install-sdk@release/0.1.2
       - name: Run sdkmanager
         run: sdkmanager platform-tools
       - name: Run instrumentation tests
