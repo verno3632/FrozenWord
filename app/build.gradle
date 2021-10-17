@@ -17,7 +17,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "jp.developer.retia.frozenword.CustomTestRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         vectorDrawables {
@@ -70,10 +72,18 @@ android {
         unitTests.all {
             testLogging.events = ["passed", "skipped", "failed"]
         }
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
     }
     packagingOptions {
         pickFirst 'META-INF/AL2.0'
+        pickFirst 'META-INF/licenses/ASM'
         pickFirst 'META-INF/LGPL2.1'
+        pickFirst 'win32-x86/attach_hotspot_windows.dll'
+        pickFirst 'win32-x86-64/attach_hotspot_windows.dll'
     }
 }
 
@@ -113,6 +123,11 @@ dependencies {
     testRuntimeOnly libs.junit5.engine
     debugImplementation libs.compose.manifest
 
+    androidTestImplementation libs.truth
+    androidTestImplementation libs.mockk.android
+    androidTestImplementation libs.mockk.jvm
+    androidTestImplementation libs.dagger.hiltAndroidTesting
+    kaptAndroidTest libs.dagger.hiltCompiler
     androidTestImplementation libs.junit5.api
     androidTestRuntimeOnly libs.junit5.engine
     androidTestImplementation libs.junit5.android.testCore

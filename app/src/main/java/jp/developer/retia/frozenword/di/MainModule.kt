@@ -28,10 +28,4 @@ object MainModule {
     fun provideHabbitDao(appDatabase: AppDatabase): HabbitDao {
         return appDatabase.habbitDao()
     }
-
-//    @Provides
-//    @Singleton
-//    fun provideTaskDao(appDatabase: AppDatabase): TaskDao {
-//        return appDatabase.taskDao()
-//    }
 }
