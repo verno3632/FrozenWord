@@ -66,18 +66,14 @@ class AddHabbitActivity : ComponentActivity() {
 
     private fun show1stPane(defaultTitle: String, sampleTitles: List<String>) {
         setContent {
-            var title: String by remember { mutableStateOf(defaultTitle) }
             FrozenWordTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    FirstPane(title = title, sampleTitles = sampleTitles, onTitleChanged = {
-                        title = it
-                        mainViewModel.onHabbitTitleUpdated(title)
-                    }, onSuggestionClicked = {
-                        mainViewModel.onHabbitTitleNextButtonClicked()
-                    }, onTitleNextButtonClicked = {
-                        mainViewModel.onHabbitTitleNextButtonClicked()
-                    })
+                    FirstPane(
+                        defaultTitle = defaultTitle,
+                        sampleTitles = sampleTitles,
+                        viewModel = mainViewModel
+                    )
                 }
             }
         }
@@ -96,6 +92,24 @@ fun PreviewFirstPane() {
             FirstPane(title = "hogehoge", sampleTitles = listOf("運動する", "勉強する", "絵を描く"))
         }
     }
+}
+
+@Composable
+fun FirstPane(
+    defaultTitle: String,
+    sampleTitles: List<String>,
+    viewModel: AddHabbitViewModel
+) {
+    var title: String by remember { mutableStateOf(defaultTitle) }
+    FirstPane(title = title, sampleTitles = sampleTitles, onTitleChanged = {
+        title = it
+        viewModel.onHabbitTitleUpdated(title)
+    }, onSuggestionClicked = {
+        viewModel.onHabbitTitleNextButtonClicked()
+    }, onTitleNextButtonClicked = {
+        viewModel.onHabbitTitleNextButtonClicked()
+    })
+
 }
 
 @Composable
