@@ -52,6 +52,8 @@ jobs:
         run: ./gradlew $GRADLE_ANDROID_LINT_TASK
       - name: Run Unit Test
         run: ./gradlew $GRADLE_UNIT_TEST_TASK
+      - name: Run sdkmanager
+        run: sdkmanager platform-tools
       - name: Run instrumentation tests
         uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
         with:
