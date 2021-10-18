@@ -11,7 +11,7 @@ env:
 jobs:
   check:
     name: Check pull request
-    runs-on: ubuntu-18.04
+    runs-on: macOS-latest
     steps:
       - name: Check out
         uses: actions/checkout@v2
