@@ -130,7 +130,11 @@ dependencies {
     debugImplementation libs.compose.manifest
 
     androidTestImplementation libs.truth
-    androidTestImplementation libs.mockk.android
+    // androidTest走らせるworkaround
+    // https://github.com/mockk/mockk/issues/281
+    androidTestImplementation (libs.mockk.android) { exclude module: 'objenesis' }
+    androidTestImplementation 'org.objenesis:objenesis:3.2'
+
     androidTestImplementation libs.mockk.jvm
     androidTestImplementation libs.dagger.hiltAndroidTesting
     kaptAndroidTest libs.dagger.hiltCompiler
