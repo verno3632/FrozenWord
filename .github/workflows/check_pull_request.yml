@@ -59,9 +59,10 @@ jobs:
         uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
         with:
           cmd: ./gradlew connectedDebugAndroidTest --stacktrace
-          api: 25
+          api: 30
           tag: default
           abi: x86
+          disableAnimations: true
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
