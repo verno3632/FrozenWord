@@ -58,12 +58,12 @@ jobs:
       - name: Run instrumentation tests
         uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
         with:
-          cmd: ./gradlew connectedDebugAndroidTest --stacktrace
+          cmd: ./gradlew connectedCheck --stacktrace
           api: 25
           tag: default
           abi: x86
           disableAnimations: true
-          profile: Pixel 2
+          hardwareProfile: Pixel 2
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
