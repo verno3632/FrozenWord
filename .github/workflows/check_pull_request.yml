@@ -59,10 +59,11 @@ jobs:
         uses: malinskiy/action-android/emulator-run-cmd@release/0.1.2
         with:
           cmd: ./gradlew connectedDebugAndroidTest --stacktrace
-          api: 30
+          api: 25
           tag: default
           abi: x86
           disableAnimations: true
+          profile: Pixel 2
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
