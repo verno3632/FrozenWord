@@ -57,7 +57,9 @@ class AddHabbitActivity : ComponentActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.events.collect { event ->
                     when (event) {
-                        is AddHabbitEvent.Back -> onBackPressed()
+                        is AddHabbitEvent.Back -> {
+//                            onBackPressed()
+                        }
                     }
                 }
             }
