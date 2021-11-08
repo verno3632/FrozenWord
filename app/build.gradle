@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -58,7 +60,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion composeVersion
-        kotlinCompilerVersion kotlinVersion
     }
 
     testOptions {
@@ -83,14 +84,22 @@ android {
                 useLegacyPackaging true
             }
         }
+        devices {
+            pixel2Api25(ManagedVirtualDevice) {
+                device = "Pixel 2"
+                apiLevel = 29
+                systemImageSource = "google"
+                abi = "x86"
+            }
+
+        }
     }
     packagingOptions {
-        pickFirst 'META-INF/AL2.0'
-        pickFirst 'META-INF/licenses/ASM'
-        pickFirst 'META-INF/LGPL2.1'
-        pickFirst 'win32-x86/attach_hotspot_windows.dll'
-        pickFirst 'win32-x86-64/attach_hotspot_windows.dll'
+        resources {
+            pickFirsts += ['META-INF/AL2.0', 'META-INF/licenses/ASM', 'META-INF/LGPL2.1', 'win32-x86/attach_hotspot_windows.dll', 'win32-x86-64/attach_hotspot_windows.dll']
+        }
     }
+    namespace 'jp.developer.retia.frozenword'
 }
 
 dependencies {
