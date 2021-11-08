@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import jp.developer.retia.frozenword.db.AppDatabase
 import jp.developer.retia.frozenword.db.HabbitDao
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,5 +29,11 @@ object MainModule {
     @Singleton
     fun provideHabbitDao(appDatabase: AppDatabase): HabbitDao {
         return appDatabase.habbitDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideIoDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
     }
 }
