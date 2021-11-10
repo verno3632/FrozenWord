@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "78168d794e2c4ea5fb069392ed3080d9",
+    "identityHash": "cbbb8718c9b545e51d649805a4177b30",
     "entities": [
       {
         "tableName": "Habbit",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `shortHabbitTitle` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `trigger` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,8 +21,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "shortHabbitTitle",
-            "columnName": "shortHabbitTitle",
+            "fieldPath": "trigger",
+            "columnName": "trigger",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -72,7 +72,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78168d794e2c4ea5fb069392ed3080d9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cbbb8718c9b545e51d649805a4177b30')"
     ]
   }
 }

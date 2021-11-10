@@ -6,8 +6,8 @@ import jp.developer.retia.frozenword.model.HabbitAndLog
 import javax.inject.Inject
 
 class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
-    suspend fun insert(title: String, shortHabbitTitle: String) {
-        habbitDao.insertAll(Habbit(title = title, shortHabbitTitle = shortHabbitTitle))
+    suspend fun insert(title: String, trigger: String) {
+        habbitDao.insertAll(Habbit(title = title, trigger = trigger))
     }
 
     suspend fun insertAll(habbits: List<Habbit>) {
