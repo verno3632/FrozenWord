@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,8 +20,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -105,16 +110,57 @@ fun PreviewHabbits() {
 fun Habbits(
     habbits: List<HabbitAndLog>
 ) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.background(Color.Gray)) {
         items(habbits) { habbit ->
             Card(modifier = Modifier.padding(2.dp)) {
-                Row(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(8.dp)) {
-                    Column {
-                        Text(habbit.habbit.trigger)
-                        Text(habbit.habbit.title)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(8.dp)
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(habbit.habbit.trigger, fontSize = 13.sp)
+                        Text(habbit.habbit.title, fontSize = 16.sp)
                     }
+                    TaskDots(modifier = Modifier.weight(1f))
                 }
             }
         }
     }
+}
+
+@Composable
+fun TaskDots(modifier: Modifier = Modifier) {
+    Column {
+        Row(
+        ) {
+            Row(
+                modifier = Modifier
+                    .width(12.dp)
+                    .height(12.dp)
+                    .background(Color.Blue),
+            ){}
+            Row(
+                modifier = Modifier
+                    .width(12.dp)
+                    .height(12.dp)
+                    .background(Color.Blue),
+            ){}
+            Row(
+            modifier = Modifier
+                .width(12.dp)
+                .height(12.dp)
+                .background(Color.Blue),
+            ){}
+
+        }
+        Row(
+            modifier = Modifier
+                .width(12.dp)
+                .height(12.dp)
+                .background(Color.Blue)
+        ) {}
+    }
+
 }
