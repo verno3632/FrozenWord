@@ -75,16 +75,6 @@ class HabbitsActivity : ComponentActivity() {
         }
     }
 
-    private fun show1stPane(defaultTitle: String, sampleTitles: List<String>) {
-        setContent {
-            FrozenWordTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                }
-            }
-        }
-    }
-
     companion object {
         fun createIntent(context: Context): Intent = Intent(context, HabbitsActivity::class.java)
     }
