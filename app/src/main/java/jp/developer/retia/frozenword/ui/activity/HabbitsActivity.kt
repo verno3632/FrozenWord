@@ -37,6 +37,7 @@ import jp.developer.retia.frozenword.ui.viewmodel.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 @OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
@@ -110,7 +111,7 @@ fun PreviewHabbits() {
 fun Habbits(
     habbits: List<HabbitAndLog>
 ) {
-    LazyColumn(modifier = Modifier.background(Color.Gray)) {
+    LazyColumn(modifier = Modifier.background(Color.Gray).wrapContentHeight()) {
         items(habbits) { habbit ->
             Card(modifier = Modifier.padding(2.dp)) {
                 Row(
@@ -123,7 +124,7 @@ fun Habbits(
                         Text(habbit.habbit.trigger, fontSize = 13.sp)
                         Text(habbit.habbit.title, fontSize = 16.sp)
                     }
-                    TaskDots(modifier = Modifier.weight(1f))
+                    TaskDots(modifier = Modifier.weight(1f), 24)
                 }
             }
         }
@@ -131,36 +132,32 @@ fun Habbits(
 }
 
 @Composable
-fun TaskDots(modifier: Modifier = Modifier) {
+fun TaskDots(modifier: Modifier = Modifier, days: Int) {
+    val columnSize = min(days / 7, 4)
     Column {
-        Row(
-        ) {
-            Row(
-                modifier = Modifier
-                    .width(12.dp)
-                    .height(12.dp)
-                    .background(Color.Blue),
-            ){}
-            Row(
-                modifier = Modifier
-                    .width(12.dp)
-                    .height(12.dp)
-                    .background(Color.Blue),
-            ){}
-            Row(
-            modifier = Modifier
-                .width(12.dp)
-                .height(12.dp)
-                .background(Color.Blue),
-            ){}
-
+        repeat(columnSize) {
+            Row {
+                repeat(7) {
+                    Row(
+                        modifier = Modifier
+                            .width(12.dp)
+                            .height(12.dp)
+                            .background(Color.Blue),
+                    ) {}
+                }
+            }
         }
-        Row(
-            modifier = Modifier
-                .width(12.dp)
-                .height(12.dp)
-                .background(Color.Blue)
-        ) {}
+        if (columnSize < 4) {
+            Row {
+                repeat(days % 7) {
+                    Row(
+                        modifier = Modifier
+                            .width(12.dp)
+                            .height(12.dp)
+                            .background(Color.Blue)
+                    ) {}
+                }
+            }
+        }
     }
-
 }
