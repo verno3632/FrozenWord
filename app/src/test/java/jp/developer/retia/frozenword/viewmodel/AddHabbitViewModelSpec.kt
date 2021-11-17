@@ -51,7 +51,7 @@ object AddHabbitViewModelSpec : Spek({
 
         it("Habbitsが保存される") {
             coVerify {
-                mockHabbitRepository.insert(title = title, shortHabbitTitle = "")
+                mockHabbitRepository.insert(title = title, trigger = "")
             }
         }
 
