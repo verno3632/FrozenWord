@@ -58,7 +58,7 @@ jobs:
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # 標準で利用できるトークンを利用
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 標準で利用できるトークンを利用
           JOB_STATUS: ${{ job.status }} # jobのステータスを Danger へ受け渡す
         run: |
           gem install ${{ steps.gem-info.outputs.packages }}
