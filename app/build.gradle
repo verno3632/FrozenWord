@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -17,7 +19,11 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "jp.developer.retia.frozenword.CustomTestRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
+
         vectorDrawables {
             useSupportLibrary true
         }
@@ -29,6 +35,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDefault true
+            debuggable true
+            minifyEnabled false
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -48,7 +60,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion composeVersion
-        kotlinCompilerVersion kotlinVersion
     }
 
     testOptions {
@@ -68,7 +79,27 @@ android {
         unitTests.all {
             testLogging.events = ["passed", "skipped", "failed"]
         }
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+        devices {
+            pixel2Api25(ManagedVirtualDevice) {
+                device = "Pixel 2"
+                apiLevel = 29
+                systemImageSource = "google"
+                abi = "x86"
+            }
+
+        }
     }
+    packagingOptions {
+        resources {
+            pickFirsts += ['META-INF/AL2.0', 'META-INF/licenses/ASM', 'META-INF/LGPL2.1', 'win32-x86/attach_hotspot_windows.dll', 'win32-x86-64/attach_hotspot_windows.dll']
+        }
+    }
+    namespace 'jp.developer.retia.frozenword'
 }
 
 dependencies {
@@ -105,6 +136,21 @@ dependencies {
     testImplementation libs.kotlin.reflect
     testImplementation libs.junit5.api
     testRuntimeOnly libs.junit5.engine
+    debugImplementation libs.compose.manifest
+
+    androidTestImplementation libs.truth
+    // androidTest走らせるworkaround
+    // https://github.com/mockk/mockk/issues/281
+    androidTestImplementation (libs.mockk.android) { exclude module: 'objenesis' }
+    androidTestImplementation 'org.objenesis:objenesis:3.2'
+
+    androidTestImplementation libs.mockk.jvm
+    androidTestImplementation libs.dagger.hiltAndroidTesting
+    kaptAndroidTest libs.dagger.hiltCompiler
+    androidTestImplementation libs.junit5.api
+    androidTestRuntimeOnly libs.junit5.engine
+    androidTestImplementation libs.junit5.android.testCore
+    androidTestRuntimeOnly libs.junit5.android.testRunner
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso
     androidTestImplementation libs.compose.junit

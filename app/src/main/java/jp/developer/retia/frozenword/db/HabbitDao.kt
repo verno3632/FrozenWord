@@ -10,6 +10,9 @@ interface HabbitDao {
     @Query("SELECT * FROM habbit")
     suspend fun getAll(): List<Habbit>
 
+    @Query("SELECT * FROM habbit")
+    fun getAllSync(): List<Habbit>
+
     @Insert(onConflict = REPLACE)
     suspend fun insertAll(vararg habbit: Habbit)
 
