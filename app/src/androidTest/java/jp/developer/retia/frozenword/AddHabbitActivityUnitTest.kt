@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import jp.developer.retia.frozenword.db.AppDatabase
 import jp.developer.retia.frozenword.db.HabbitDao
 import jp.developer.retia.frozenword.ui.activity.AddHabbitActivity
@@ -13,7 +14,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 /**
  * Instrumented test, which will execute on an Android device.

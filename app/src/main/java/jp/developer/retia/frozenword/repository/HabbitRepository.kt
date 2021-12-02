@@ -1,9 +1,9 @@
 package jp.developer.retia.frozenword.repository
 
+import javax.inject.Inject
 import jp.developer.retia.frozenword.db.HabbitDao
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
-import javax.inject.Inject
 
 class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
     suspend fun insert(title: String, trigger: String) {

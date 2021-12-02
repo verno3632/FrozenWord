@@ -9,7 +9,9 @@ import kotlinx.coroutines.test.setMain
 import org.spekframework.spek2.dsl.LifecycleAware
 
 @ExperimentalCoroutinesApi
-fun LifecycleAware.setMainDispatcher(dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()) {
+fun LifecycleAware.setMainDispatcher(
+    dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+) {
     beforeEachGroup {
         Dispatchers.setMain(dispatcher)
     }

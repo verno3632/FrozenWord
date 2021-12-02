@@ -19,19 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.developer.retia.frozenword.R
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitEvent
 import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitUiState
 import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 
 @OptIn(InternalCoroutinesApi::class)
@@ -65,7 +59,7 @@ class AddHabbitActivity : ComponentActivity() {
 //                mainViewModel.events.collect { event ->
 //                    when (event) {
 //                        is AddHabbitEvent.Back -> {
-////                            onBackPressed()
+// //                            onBackPressed()
 //                        }
 //                    }
 //                }
@@ -94,7 +88,7 @@ class AddHabbitActivity : ComponentActivity() {
 }
 
 @Composable
-fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()){
+fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
     val state by addHabbitViewModel.uiState.collectAsState()
 
     FrozenWordTheme {
@@ -139,7 +133,6 @@ fun FirstPane(
     }, onTitleNextButtonClicked = {
         viewModel.onHabbitTitleNextButtonClicked()
     })
-
 }
 
 @Composable
