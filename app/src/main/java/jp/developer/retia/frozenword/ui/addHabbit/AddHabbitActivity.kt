@@ -37,46 +37,11 @@ class AddHabbitActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                mainViewModel.uiState.collect { uiState ->
-//                    when (uiState) {
-//                        is AddHabbitUiState.HabbitTitlePage -> show1stPane(
-//                            uiState.title,
-//                            uiState.sampleTitle
-//                        )
-//                        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
-//                        is AddHabbitUiState.TitlePage -> TODO()
-//                    }
-//                }
-//            }
-//        }
-        setContent {
-            AddHabbitScreen()
-        }
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                mainViewModel.events.collect { event ->
-//                    when (event) {
-//                        is AddHabbitEvent.Back -> {
-// //                            onBackPressed()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-    }
-
-    private fun show1stPane(defaultTitle: String, sampleTitles: List<String>) {
         setContent {
             FrozenWordTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    FirstPane(
-                        defaultTitle = defaultTitle,
-                        sampleTitles = sampleTitles,
-                        viewModel = mainViewModel
-                    )
+                    AddHabbitScreen()
                 }
             }
         }
@@ -90,174 +55,16 @@ class AddHabbitActivity : ComponentActivity() {
 @Composable
 fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
     val state by addHabbitViewModel.uiState.collectAsState()
-
-    FrozenWordTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(color = MaterialTheme.colors.background) {
-            when (val s = state) {
-                is AddHabbitUiState.HabbitTitlePage ->
-                    FirstPane(
-                        defaultTitle = s.title,
-                        sampleTitles = s.sampleTitle,
-                        viewModel = addHabbitViewModel
-                    )
-                is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
-                is AddHabbitUiState.TitlePage -> TODO()
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewFirstPane() {
-    FrozenWordTheme {
-        Surface {
-            FirstPane(title = "hogehoge", sampleTitles = listOf("運動する", "勉強する", "絵を描く"))
-        }
-    }
-}
-
-@Composable
-fun FirstPane(
-    defaultTitle: String,
-    sampleTitles: List<String>,
-    viewModel: AddHabbitViewModel
-) {
-    var title: String by remember { mutableStateOf(defaultTitle) }
-    FirstPane(title = title, sampleTitles = sampleTitles, onTitleChanged = {
-        title = it
-        viewModel.onHabbitTitleUpdated(title)
-    }, onSuggestionClicked = {
-        viewModel.onHabbitTitleNextButtonClicked()
-    }, onTitleNextButtonClicked = {
-        viewModel.onHabbitTitleNextButtonClicked()
-    })
-}
-
-@Composable
-fun FirstPane(
-    title: String,
-    sampleTitles: List<String>,
-    onTitleChanged: (String) -> Unit = {},
-    onSuggestionClicked: (String) -> Unit = {},
-    onTitleNextButtonClicked: () -> Unit = {},
-) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("継続したいことは？")
-        OutlinedTextField(
-            value = title,
-            onValueChange = onTitleChanged
-        )
-        sampleTitles.take(3).forEach { Chip(it, onSuggestionClicked) }
-        Button(onClick = onTitleNextButtonClicked) {
-            Text("次へ")
-        }
-    }
-}
-
-// @Composable
-// fun ListItem(task: Task, onChangedCheckbox: (Task, Boolean) -> Unit) {
-//    val checkedState = remember { mutableStateOf(task.checked) }
-//    ListItem(task.oldHabbit.title, checkedState.value, onCheckedChanged = {
-//        checkedState.value = it
-//        onChangedCheckbox(task, it)
-//    })
-// }
-
-@Composable
-fun ListItem(text: String, checkedState: Boolean, onCheckedChanged: (Boolean) -> Unit) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        backgroundColor = MaterialTheme.colors.surface
-    ) {
-        Row(
-            modifier = Modifier
-                .height(200.dp)
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Checkbox(checked = checkedState, onCheckedChange = onCheckedChanged)
-            Text(text = text)
-        }
-    }
-}
-
-@Composable
-fun Chip(
-    title: String,
-    onSelectedCategoryChanged: (String) -> Unit,
-) {
-    Surface(
-        modifier = Modifier
-            .padding(end = 8.dp, bottom = 8.dp)
-            .clickable { onSelectedCategoryChanged(title) },
-        elevation = 8.dp,
-        shape = RoundedCornerShape(16.dp),
-        color = colorResource(R.color.purple_500)
-    ) {
-        Row {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.body2,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp)
+    when (val s = state) {
+        is AddHabbitUiState.HabbitTitlePage ->
+            FirstPane(
+                defaultTitle = s.title,
+                sampleTitles = s.sampleTitle,
+                onTitleChanged = addHabbitViewModel::onHabbitTitleUpdated,
+                onSuggestionClicked = addHabbitViewModel::onSuggestionHabbitTitleClicked,
+                onTitleNextButtonClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked
             )
-        }
+        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
+        is AddHabbitUiState.TitlePage -> TODO()
     }
 }
-
-// @Composable
-// fun TaskList(tasks: List<Task>, onChangedCheckbox: (Task, Boolean) -> Unit) {
-//    LazyColumn {
-//        items(tasks, { it.oldHabbit.id.hashCode() }) { task ->
-//            ListItem(task, onChangedCheckbox)
-//        }
-//    }
-// }
-
-// @Preview(showBackground = true)
-// @Composable
-// fun DefaultPreview() {
-//    Sample(
-//        listOf(listOf(Task(Date(), false, OldHabbit("hogehoge"))))
-//
-//
-//    ) { task, checked -> }
-// }
-
-// @Composable
-// private fun Sample(tasksList: List<List<Task>>, onChangedCheckbox: (Task, Boolean) -> Unit) {
-//    val navController = rememberNavController()
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(stringResource(id = R.string.app_name)) },
-//            )
-//        },
-//        modifier = Modifier.fillMaxSize(),
-//        backgroundColor = MaterialTheme.colors.onBackground
-//
-//    ) {
-//        TaskList(tasksList[0], onChangedCheckbox)
-// //        Column(Modifier.fillMaxSize()) {
-// //            // Display 10 items
-// //            val pagerState = rememberPagerState(
-// //                pageCount = tasksList.size,
-// //                // We increase the offscreen limit, to allow pre-loading of images
-// //                initialOffscreenLimit = 2,
-// //                infiniteLoop = true,
-// //            )
-// //
-// //            HorizontalPager(
-// //                state = pagerState,
-// //                // Add some horizontal spacing between items
-// //                itemSpacing = 4.dp,
-// //                modifier = Modifier
-// //                    .weight(1f)
-// //                    .fillMaxWidth()
-// //            ) { page ->
-// //            }
-// //        }
-//    }
-// }
