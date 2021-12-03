@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.ui.activity
+package jp.developer.retia.frozenword.ui.addHabbit
 
 import android.content.Context
 import android.content.Intent

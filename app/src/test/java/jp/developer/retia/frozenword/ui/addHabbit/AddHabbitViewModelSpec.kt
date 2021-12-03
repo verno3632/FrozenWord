@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.viewmodel
+package jp.developer.retia.frozenword.ui.addHabbit
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coVerify
