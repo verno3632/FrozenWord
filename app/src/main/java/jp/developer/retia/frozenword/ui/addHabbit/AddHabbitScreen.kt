@@ -37,6 +37,7 @@ fun AddHabbitScreen(
         is AddHabbitUiState.TitlePage -> TODO()
     }
 }
+
 @Preview
 @Composable
 fun PreviewFirstPane() {
