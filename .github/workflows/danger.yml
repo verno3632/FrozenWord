@@ -8,7 +8,7 @@ on:
 
 jobs:
   danger:
-    name: Check pull request
+    name: Danger after check
     runs-on: macOS-latest
     steps:
       - name: Set up Ruby # gem を利用するので Ruby をセットアップ
