@@ -8,9 +8,26 @@ on:
 
 jobs:
   danger:
-    name: Check pull request
-    runs-on: macOS-latest
+    name: Danger after check
+    runs-on: ubuntu-latest
     steps:
+      - name: Set up Ruby # gem を利用するので Ruby をセットアップ
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Get gem info
+        env: # Danger で利用する gem をここで列挙
+          PACKAGES: danger:8.4.2 danger-checkstyle_reports:0.1.0 danger-android_lint:0.0.8 danger-junit:1.0.0 danger-suggester:0.1.0
+        id: gem-info
+        run: |
+          echo "::set-output name=dir::$(gem environment gemdir)" # キャッシュするgemのディレクトリ
+          echo "::set-output name=packages::$PACKAGES" # install 用の文字列
+          echo "::set-output name=key::$(echo $PACKAGES | tr ' ' '-')" # キャッシュのキー文字列
+      - name: Restore gem cache # gem のキャッシュをリストア
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.gem-info.outputs.dir }}
+          key: ${{ runner.os }}-gem-${{ steps.gem-info.outputs.key }}
       - name: Set up and run Danger
         if: cancelled() != true # 中断されない限り、エラーでも実行
         env:
