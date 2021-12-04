@@ -9,7 +9,7 @@ on:
 jobs:
   danger:
     name: Danger after check
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Ruby # gem を利用するので Ruby をセットアップ
         uses: actions/setup-ruby@v1
