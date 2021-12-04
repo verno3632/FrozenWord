@@ -55,16 +55,11 @@ class AddHabbitActivity : ComponentActivity() {
 @Composable
 fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
     val state by addHabbitViewModel.uiState.collectAsState()
-    when (val s = state) {
-        is AddHabbitUiState.HabbitTitlePage ->
-            FirstPane(
-                defaultTitle = s.title,
-                sampleTitles = s.sampleTitle,
-                onTitleChanged = addHabbitViewModel::onHabbitTitleUpdated,
-                onSuggestionClicked = addHabbitViewModel::onSuggestionHabbitTitleClicked,
-                onTitleNextButtonClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked
-            )
-        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
-        is AddHabbitUiState.TitlePage -> TODO()
-    }
+
+    AddHabbitScreen(
+        state = state,
+        onTitleChanged = addHabbitViewModel::onHabbitTitleUpdated,
+        onSuggestionClicked = addHabbitViewModel::onSuggestionHabbitTitleClicked,
+        onTitleNextButtonClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked
+    )
 }
