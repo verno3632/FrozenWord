@@ -1,5 +1,6 @@
 package jp.developer.retia.frozenword.ui.habbits
 
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
+import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitUiState
+import jp.developer.retia.frozenword.ui.viewmodel.HabbitsUiState
 import kotlin.math.min
 
 @Preview
@@ -35,14 +38,27 @@ fun PreviewHabbits() {
     }
 }
 
+@Composable
+fun HabbitsScreen(
+    uiState: HabbitsUiState
+) {
+    when (uiState) {
+        is HabbitsUiState.Loaded -> {
+            Habbits(habbits = uiState.habbits)
+        }
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Habbits(
     habbits: List<HabbitAndLog>
 ) {
-    LazyColumn(modifier = Modifier
-        .background(Color.Gray)
-        .wrapContentHeight()) {
+    LazyColumn(
+        modifier = Modifier
+            .background(Color.Gray)
+            .wrapContentHeight()
+    ) {
         items(habbits) { habbit ->
             Card(modifier = Modifier.padding(2.dp)) {
                 Row(

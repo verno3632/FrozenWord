@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,18 +46,10 @@ class HabbitsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            PreviewHabbits()
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                habbitsViewModel.uiState.collect { uiState ->
-                    when (uiState) {
-                        is HabbitsUiState.Loaded -> {
-                            setContent {
-                                Habbits(habbits = uiState.habbits)
-                            }
-                        }
-                    }
+            FrozenWordTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    HabbitsScreen(habbitsViewModel = habbitsViewModel)
                 }
             }
         }
@@ -74,3 +69,9 @@ class HabbitsActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun HabbitsScreen(habbitsViewModel: HabbitsViewModel) {
+    val state by habbitsViewModel.uiState.collectAsState()
+
+    HabbitsScreen(state)
+}
