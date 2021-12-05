@@ -1,12 +1,12 @@
-package jp.developer.retia.frozenword.ui.viewmodel
+package jp.developer.retia.frozenword.ui.addHabbit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AddHabbitViewModel @Inject constructor(

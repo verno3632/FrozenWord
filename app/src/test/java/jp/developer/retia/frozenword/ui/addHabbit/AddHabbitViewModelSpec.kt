@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.viewmodel
+package jp.developer.retia.frozenword.ui.addHabbit
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coVerify
@@ -6,9 +6,6 @@ import io.mockk.mockk
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
 import jp.developer.retia.frozenword.toList
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitEvent
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitUiState
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.spekframework.spek2.Spek

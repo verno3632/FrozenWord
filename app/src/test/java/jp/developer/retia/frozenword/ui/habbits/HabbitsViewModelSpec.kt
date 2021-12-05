@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.viewmodel
+package jp.developer.retia.frozenword.ui.habbits
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -6,7 +6,6 @@ import io.mockk.mockk
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
-import jp.developer.retia.frozenword.ui.viewmodel.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.spekframework.spek2.Spek

@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.AddHabbitActivity" />
-        <activity android:name=".ui.activity.HabbitsActivity" />
+        <activity android:name=".ui.addHabbit.AddHabbitActivity" />
+        <activity android:name=".ui.habbits.HabbitsActivity" />
 
         <service
             android:name=".FrozenWordAccessibilityService"
