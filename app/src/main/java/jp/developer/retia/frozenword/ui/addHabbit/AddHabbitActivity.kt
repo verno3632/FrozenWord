@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)

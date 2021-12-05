@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.ui.viewmodel
+package jp.developer.retia.frozenword.ui.addHabbit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

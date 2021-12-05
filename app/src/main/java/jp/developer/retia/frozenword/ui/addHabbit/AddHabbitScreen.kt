@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.developer.retia.frozenword.R
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
-import jp.developer.retia.frozenword.ui.viewmodel.AddHabbitUiState
 
 @Composable
 fun AddHabbitScreen(

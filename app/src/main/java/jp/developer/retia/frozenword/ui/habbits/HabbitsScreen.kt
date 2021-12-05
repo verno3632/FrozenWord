@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
-import jp.developer.retia.frozenword.ui.viewmodel.HabbitsUiState
 import kotlin.math.min
 
 @Preview

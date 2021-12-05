@@ -16,8 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
-import jp.developer.retia.frozenword.ui.viewmodel.HabbitsEvent
-import jp.developer.retia.frozenword.ui.viewmodel.HabbitsViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
