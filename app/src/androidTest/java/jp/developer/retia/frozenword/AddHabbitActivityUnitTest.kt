@@ -8,7 +8,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import jp.developer.retia.frozenword.db.AppDatabase
 import jp.developer.retia.frozenword.db.HabbitDao
-import jp.developer.retia.frozenword.ui.activity.AddHabbitActivity
+import jp.developer.retia.frozenword.ui.addHabbit.AddHabbitActivity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

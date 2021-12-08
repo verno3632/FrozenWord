@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FrozenWord">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.habbits.HabbitsActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FrozenWord.NoActionBar">
@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.addHabbit.AddHabbitActivity" />
-        <activity android:name=".ui.habbits.HabbitsActivity" />
 
         <service
             android:name=".FrozenWordAccessibilityService"

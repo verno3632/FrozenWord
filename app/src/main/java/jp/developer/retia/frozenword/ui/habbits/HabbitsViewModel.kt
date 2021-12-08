@@ -13,9 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HabbitsViewModel @Inject constructor(
     private val habbitRepository: HabbitRepository,
-    ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(HabbitsUiState.Loaded(emptyList()))
     val uiState: StateFlow<HabbitsUiState> = _uiState.asStateFlow()
 
@@ -28,6 +27,12 @@ class HabbitsViewModel @Inject constructor(
             _uiState.emit(HabbitsUiState.Loaded(habbits))
         }
     }
+
+    fun onClickActionButton() {
+        viewModelScope.launch(ioDispatcher) {
+            _events.emit(HabbitsEvent.NavigateToAdd)
+        }
+    }
 }
 
 sealed class HabbitsUiState {
@@ -36,4 +41,5 @@ sealed class HabbitsUiState {
 
 sealed class HabbitsEvent {
     object Back : HabbitsEvent()
+    object NavigateToAdd : HabbitsEvent()
 }
