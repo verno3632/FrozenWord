@@ -8,7 +8,6 @@ import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
 import jp.developer.retia.frozenword.toList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.spekframework.spek2.Spek

@@ -64,12 +64,15 @@ class HabbitsActivity : ComponentActivity() {
 fun HabbitsScreen(habbitsViewModel: HabbitsViewModel) {
     val state by habbitsViewModel.uiState.collectAsState()
 
-    Scaffold(floatingActionButton =
-    {
-        FloatingActionButton(onClick = { habbitsViewModel.onClickActionButton() }) {
-            Icon(Icons.Filled.Add, contentDescription = "追加")
+    Scaffold(
+        floatingActionButton =
+        {
+            FloatingActionButton(onClick = { habbitsViewModel.onClickActionButton() }) {
+                Icon(Icons.Filled.Add, contentDescription = "追加")
+            }
+        },
+        content = {
+            HabbitsScreen(state) { habbitsViewModel.onClickActionButton() }
         }
-    }, content = {
-        HabbitsScreen(state) { habbitsViewModel.onClickActionButton() }
-    })
+    )
 }
