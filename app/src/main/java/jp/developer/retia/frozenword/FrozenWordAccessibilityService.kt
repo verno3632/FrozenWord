@@ -7,6 +7,7 @@ import android.net.Uri
 import android.provider.Browser
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import jp.developer.retia.frozenword.ui.habbits.HabbitsActivity
 
 class FrozenWordAccessibilityService : AccessibilityService() {
     override fun onInterrupt() {
@@ -86,7 +87,7 @@ class FrozenWordAccessibilityService : AccessibilityService() {
                 .setPackage(browserPackage)
                 .putExtra(Browser.EXTRA_APPLICATION_ID, browserPackage)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            val intent1 = MainActivity.createIntent(this)
+            val intent1 = HabbitsActivity.createIntent(this)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivities(arrayOf(intent0, intent1))
         } catch (e: ActivityNotFoundException) {

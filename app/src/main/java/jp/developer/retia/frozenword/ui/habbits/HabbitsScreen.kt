@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,11 +35,12 @@ fun PreviewHabbits() {
 
 @Composable
 fun HabbitsScreen(
-    uiState: HabbitsUiState
+    uiState: HabbitsUiState,
+    onClickActionButton: (() -> Unit) = {}
 ) {
     when (uiState) {
         is HabbitsUiState.Loaded -> {
-            Habbits(habbits = uiState.habbits)
+            Habbits(habbits = uiState.habbits, onClickActionButton)
         }
     }
 }
@@ -49,7 +48,8 @@ fun HabbitsScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Habbits(
-    habbits: List<HabbitAndLog>
+    habbits: List<HabbitAndLog>,
+    onClickActionButton: (() -> Unit) = {}
 ) {
     LazyColumn(
         modifier = Modifier
