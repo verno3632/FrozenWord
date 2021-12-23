@@ -1,9 +1,7 @@
 package jp.developer.retia.frozenword.ui.addHabbit
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -56,9 +54,16 @@ fun FirstPane(
     onTitleNextButtonClicked: () -> Unit = {},
 ) {
     var title: String by remember { mutableStateOf(defaultTitle) }
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         Text("継続したいことは？")
         OutlinedTextField(
+            modifier = Modifier.padding(top = 16.dp),
             value = title,
             onValueChange = {
                 title = it
@@ -66,7 +71,10 @@ fun FirstPane(
             }
         )
         sampleTitles.take(3).forEach { Chip(it, onSuggestionClicked) }
-        Button(onClick = onTitleNextButtonClicked) {
+        Button(
+            modifier = Modifier.padding(top = 16.dp),
+            onClick = onTitleNextButtonClicked
+        ) {
             Text("次へ")
         }
     }
