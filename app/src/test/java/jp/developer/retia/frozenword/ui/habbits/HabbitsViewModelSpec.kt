@@ -41,6 +41,19 @@ object HabbitsViewModelSpec : Spek({
         }
     }
 
+    describe("onResume") {
+        val habbits = listOf(mockk<HabbitAndLog>())
+        beforeEachTest {
+            coEvery { mockHabbitRepository.getHabbitAndLogs() } returns habbits
+        }
+
+        it("習慣一覧が表示される") {
+            assertThat(habbitsViewModel.uiState.value).isEqualTo(
+                HabbitsUiState.Loaded(habbits)
+            )
+        }
+    }
+
     describe("onClickActionButton") {
         lateinit var actual: List<HabbitsEvent>
         beforeEachTest {

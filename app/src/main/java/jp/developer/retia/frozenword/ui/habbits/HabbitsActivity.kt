@@ -51,6 +51,11 @@ class HabbitsActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        habbitsViewModel.onResume()
+    }
+
     private fun navigateToAdd() {
         startActivity(Intent(this, AddHabbitActivity::class.java))
     }
