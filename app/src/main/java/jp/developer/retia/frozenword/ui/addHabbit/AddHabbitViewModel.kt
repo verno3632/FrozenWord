@@ -45,18 +45,6 @@ class AddHabbitViewModel @Inject constructor(
         }
     }
 
-    fun onSimpleHabbitTitleUpdated(simpleHabbitTitle: String) {
-        this.simpleHabbitTitle = simpleHabbitTitle
-        viewModelScope.launch {
-            _uiState.emit(
-                AddHabbitUiState.SimpleHabbitTitlePage(
-                    habbitTitle,
-                    emptyList()
-                )
-            )
-        }
-    }
-
     fun onTriggerUpdated(trigger: String) {
         this.trigger = trigger
     }
@@ -73,7 +61,8 @@ class AddHabbitViewModel @Inject constructor(
     fun onSkipButtonClicked() {
     }
 
-    fun onClickedOkButton() {
+    fun onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle: String) {
+        this.simpleHabbitTitle = simpleHabbitTitle
         viewModelScope.launch {
             habbitRepository.insert(title = habbitTitle, trigger = simpleHabbitTitle)
             _events.emit(AddHabbitEvent.Back)

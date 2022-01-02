@@ -17,8 +17,7 @@ fun PreviewAddSimpleHabbitTitleScreen() {
 @Composable
 fun AddSimpleHabbitTitleScreen(
     habbit: String,
-    onSimpleHabbitTitleChanged: (String) -> Unit = {},
-    onCompleteClicked: () -> Unit = {},
+    onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
     var simpleHabbitTitle: String by remember { mutableStateOf("") }
@@ -29,9 +28,8 @@ fun AddSimpleHabbitTitleScreen(
         buttonEnabled = simpleHabbitTitle.isNotBlank(),
         onSimpleHabbitTitleChanged = { changed ->
             simpleHabbitTitle = changed
-            onSimpleHabbitTitleChanged(simpleHabbitTitle)
         },
-        onCompleteClicked = onCompleteClicked,
+        onSimpleHabbitTitleCompleteClicked = { onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle) },
         onNextClicked = onNextClicked
     )
 }
@@ -42,7 +40,7 @@ fun AddSimpleHabbitTitleScreen(
     simpleHabbitTitle: String,
     buttonEnabled: Boolean,
     onSimpleHabbitTitleChanged: (String) -> Unit = {},
-    onCompleteClicked: () -> Unit = {},
+    onSimpleHabbitTitleCompleteClicked: () -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
     Column(
@@ -77,7 +75,7 @@ fun AddSimpleHabbitTitleScreen(
         ) {
             Button(
                 modifier = Modifier.padding(top = 16.dp),
-                onClick = onCompleteClicked,
+                onClick = onSimpleHabbitTitleCompleteClicked,
                 enabled = buttonEnabled
             ) {
                 Text("これで作る")
@@ -87,7 +85,7 @@ fun AddSimpleHabbitTitleScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .offset(12.dp),
-                onClick = onCompleteClicked,
+                onClick = onSimpleHabbitTitleCompleteClicked,
                 enabled = buttonEnabled
             ) {
                 Text("達成率を上げる")
