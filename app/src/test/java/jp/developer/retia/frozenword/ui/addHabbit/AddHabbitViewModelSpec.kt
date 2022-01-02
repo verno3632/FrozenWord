@@ -1,7 +1,6 @@
 package jp.developer.retia.frozenword.ui.addHabbit
 
 import com.google.common.truth.Truth.assertThat
-import io.mockk.coVerify
 import io.mockk.mockk
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
@@ -47,7 +46,7 @@ object AddHabbitViewModelSpec : Spek({
         }
 
         it("simpleHabbit画面へ遷移") {
-            assertThat(actual[1]).isEqualTo(AddHabbitUiState.ShortHabbitTitlePage(title, emptyList()))
+            assertThat(actual[1]).isEqualTo(AddHabbitUiState.SimpleHabbitTitlePage(title, emptyList()))
         }
     }
 })

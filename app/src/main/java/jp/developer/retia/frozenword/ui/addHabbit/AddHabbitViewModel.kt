@@ -14,7 +14,7 @@ class AddHabbitViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var habbitTitle: String = ""
-    private var shortHabbitTitle: String = ""
+    private var simpleHabbitTitle: String = ""
     private var trigger: String? = null
 
     private val titleSuggestion = emptyList<String>()
@@ -45,11 +45,11 @@ class AddHabbitViewModel @Inject constructor(
         }
     }
 
-    fun onShortHabbitTitleUpdated(shortHabbitTitle: String) {
-        this.shortHabbitTitle = shortHabbitTitle
+    fun onSimpleHabbitTitleUpdated(simpleHabbitTitle: String) {
+        this.simpleHabbitTitle = simpleHabbitTitle
         viewModelScope.launch {
             _uiState.emit(
-                AddHabbitUiState.ShortHabbitTitlePage(
+                AddHabbitUiState.SimpleHabbitTitlePage(
                     habbitTitle,
                     emptyList()
                 )
@@ -63,7 +63,7 @@ class AddHabbitViewModel @Inject constructor(
 
     fun onHabbitTitleNextButtonClicked() {
         viewModelScope.launch {
-            _uiState.emit(AddHabbitUiState.ShortHabbitTitlePage(habbitTitle, emptyList()))
+            _uiState.emit(AddHabbitUiState.SimpleHabbitTitlePage(habbitTitle, emptyList()))
         }
     }
 
@@ -75,7 +75,7 @@ class AddHabbitViewModel @Inject constructor(
 
     fun onClickedOkButton() {
         viewModelScope.launch {
-            habbitRepository.insert(title = habbitTitle, trigger = shortHabbitTitle)
+            habbitRepository.insert(title = habbitTitle, trigger = simpleHabbitTitle)
             _events.emit(AddHabbitEvent.Back)
         }
     }
@@ -91,7 +91,7 @@ sealed class AddHabbitUiState {
         val enableButton: Boolean
     ) : AddHabbitUiState()
 
-    data class ShortHabbitTitlePage(val title: String, val sampleTitles: List<String>) :
+    data class SimpleHabbitTitlePage(val title: String, val sampleTitles: List<String>) :
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()

@@ -34,7 +34,7 @@ fun AddHabbitScreen(
                 onSuggestionClicked = onSuggestionClicked,
                 onTitleNextButtonClicked = onTitleNextButtonClicked,
             )
-        is AddHabbitUiState.ShortHabbitTitlePage ->
+        is AddHabbitUiState.SimpleHabbitTitlePage ->
             AddSimpleHabbitScreen(
                 habbit = state.title,
                 onSimpleHabbitChanged = onSimpleHabbitChanged,
