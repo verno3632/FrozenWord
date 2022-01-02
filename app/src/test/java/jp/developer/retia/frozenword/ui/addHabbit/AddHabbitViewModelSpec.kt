@@ -51,7 +51,7 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
 
-        it("simpleHabbitTitle画面へ遷移") {
+        it("戻る") {
             assertThat(actual[0]).isEqualTo(
                 AddHabbitEvent.Back
             )
@@ -63,4 +63,28 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
     }
+
+    describe("onSimpleHabbitTitleNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+                }
+            }
+        }
+
+        it("トリガー画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitTriggerPage(
+                    title,
+                    simpleHabbitTitle
+                )
+            )
+        }
+    }
+
 })

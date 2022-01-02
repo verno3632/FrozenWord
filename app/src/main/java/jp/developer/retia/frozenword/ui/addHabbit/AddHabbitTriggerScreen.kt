@@ -5,42 +5,51 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.developer.retia.frozenword.ui.habbits.Habbit
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewAddSimpleHabbitTitleScreen() {
-    AddSimpleHabbitTitleScreen(habbit = "運動", simpleHabbitTitle = "運動着に着替える", buttonEnabled = false)
-}
-
-@Composable
-fun AddSimpleHabbitTitleScreen(
-    habbit: String,
-    onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
-    onNextClicked: (String) -> Unit = {},
-) {
-    val (simpleHabbitTitle, setSimpleHabbitTitle) = remember { mutableStateOf("") }
-
-    AddSimpleHabbitTitleScreen(
-        habbit = habbit,
-        simpleHabbitTitle = simpleHabbitTitle,
-        buttonEnabled = simpleHabbitTitle.isNotBlank(),
-        onSimpleHabbitTitleChanged = setSimpleHabbitTitle,
-        onSimpleHabbitTitleCompleteClicked = { onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle) },
-        onNextClicked = { onNextClicked(simpleHabbitTitle) }
+fun PreviewAddHabbitTriggerScreen() {
+    AddHabbitTriggerScreen(
+        habbit = "運動",
+        simpleHabbitTitle = "運動着に着替える",
+        trigger = "朝起きたら",
+        buttonEnabled = false
     )
 }
 
 @Composable
-fun AddSimpleHabbitTitleScreen(
+fun AddHabbitTriggerScreen(
     habbit: String,
     simpleHabbitTitle: String,
-    buttonEnabled: Boolean,
-    onSimpleHabbitTitleChanged: (String) -> Unit = {},
-    onSimpleHabbitTitleCompleteClicked: () -> Unit = {},
+    onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
     onNextClicked: () -> Unit = {},
+) {
+    val (trigger, setTrigger) = remember { mutableStateOf("") }
+
+    AddHabbitTriggerScreen(
+        habbit = habbit,
+        simpleHabbitTitle = simpleHabbitTitle,
+        trigger = trigger,
+        buttonEnabled = simpleHabbitTitle.isNotBlank(),
+        onTriggerChanged = setTrigger,
+        onTriggerCompleteClicked = { onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle) },
+        onTriggerNextClicked = onNextClicked
+    )
+}
+
+@Composable
+fun AddHabbitTriggerScreen(
+    habbit: String,
+    simpleHabbitTitle: String,
+    trigger: String,
+    buttonEnabled: Boolean,
+    onTriggerChanged: (String) -> Unit = {},
+    onTriggerCompleteClicked: () -> Unit = {},
+    onTriggerNextClicked: () -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -50,35 +59,29 @@ fun AddSimpleHabbitTitleScreen(
             .fillMaxHeight()
             .padding(32.dp)
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(habbit, style = MaterialTheme.typography.subtitle1)
-            Text("のために1分でできる習慣は？", style = MaterialTheme.typography.subtitle1)
-            Text("1分間の習慣を行えばその日は達成！忙しければそこで終わっても良いし、やる気があれば続けてやっても良いです！")
-        }
+        Text(
+            "いつやる？",
+            style = MaterialTheme.typography.h1,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start
+        )
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            value = simpleHabbitTitle,
-            onValueChange = onSimpleHabbitTitleChanged
+            value = trigger,
+            onValueChange = onTriggerChanged
         )
-
         Habbit(trigger = simpleHabbitTitle, title = habbit, modifier = Modifier.offset(y = 16.dp))
 
         Row(
             modifier = Modifier
                 .wrapContentHeight()
                 .wrapContentWidth()
-                .offset(y = 4.dp)
         ) {
             Button(
                 modifier = Modifier.padding(top = 16.dp),
-                onClick = onSimpleHabbitTitleCompleteClicked,
+                onClick = onTriggerCompleteClicked,
                 enabled = buttonEnabled
             ) {
                 Text("これで作る")
@@ -88,7 +91,7 @@ fun AddSimpleHabbitTitleScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .offset(12.dp),
-                onClick = onNextClicked,
+                onClick = onTriggerNextClicked,
                 enabled = buttonEnabled
             ) {
                 Text("達成率を上げる")
