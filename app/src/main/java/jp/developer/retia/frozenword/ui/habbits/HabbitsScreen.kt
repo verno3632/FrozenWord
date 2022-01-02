@@ -24,9 +24,27 @@ fun PreviewHabbits() {
         Surface {
             Habbits(
                 listOf(
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "何何する"
+                        ), emptyList()
+                    ),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "なになにする"
+                        ), emptyList()
+                    ),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "naninaniする"
+                        ), emptyList()
+                    ),
                 )
             )
         }
@@ -66,13 +84,14 @@ fun Habbits(
 fun Habbit(
     habbit: HabbitAndLog
 ) {
-    Habbit(habbit.habbit.trigger, habbit.habbit.title)
+    Habbit(habbit.habbit.trigger, habbit.habbit.title, habbit.habbit.trigger)
 }
 
 @Composable
 fun Habbit(
-    trigger: String,
     title: String,
+    simpleHabbitTitle: String,
+    trigger: String? = null,
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier.padding(2.dp)) {
@@ -83,8 +102,11 @@ fun Habbit(
                 .padding(8.dp)
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(trigger, fontSize = 13.sp)
-                Text(title, fontSize = 16.sp)
+                Text(title, fontSize = 12.sp)
+                trigger?.let {
+                    Text(trigger, fontSize = 12.sp)
+                }
+                Text(simpleHabbitTitle, fontSize = 16.sp)
             }
             TaskDots(modifier = Modifier.weight(1f), 24)
         }

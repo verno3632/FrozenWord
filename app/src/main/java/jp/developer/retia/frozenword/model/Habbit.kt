@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class Habbit(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
+    val simpleHabbitTitle: String,
     val trigger: String,
 )

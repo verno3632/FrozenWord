@@ -25,7 +25,7 @@ fun PreviewAddHabbitTriggerScreen() {
 fun AddHabbitTriggerScreen(
     habbit: String,
     simpleHabbitTitle: String,
-    onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
+    onHabbitTriggerCompleteClicked: (String) -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
     val (trigger, setTrigger) = remember { mutableStateOf("") }
@@ -36,7 +36,7 @@ fun AddHabbitTriggerScreen(
         trigger = trigger,
         buttonEnabled = simpleHabbitTitle.isNotBlank(),
         onTriggerChanged = setTrigger,
-        onTriggerCompleteClicked = { onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle) },
+        onTriggerCompleteClicked = { onHabbitTriggerCompleteClicked(trigger) },
         onTriggerNextClicked = onNextClicked
     )
 }
@@ -72,7 +72,12 @@ fun AddHabbitTriggerScreen(
             value = trigger,
             onValueChange = onTriggerChanged
         )
-        Habbit(trigger = simpleHabbitTitle, title = habbit, modifier = Modifier.offset(y = 16.dp))
+        Habbit(
+            title = habbit,
+            simpleHabbitTitle = simpleHabbitTitle,
+            trigger = trigger,
+            modifier = Modifier.offset(y = 16.dp)
+        )
 
         Row(
             modifier = Modifier

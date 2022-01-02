@@ -68,7 +68,7 @@ fun AddSimpleHabbitTitleScreen(
             onValueChange = onSimpleHabbitTitleChanged
         )
 
-        Habbit(trigger = simpleHabbitTitle, title = habbit, modifier = Modifier.offset(y = 16.dp))
+        Habbit(simpleHabbitTitle = simpleHabbitTitle, title = habbit, trigger = "", modifier = Modifier.offset(y = 16.dp))
 
         Row(
             modifier = Modifier
