@@ -32,7 +32,7 @@ class HabbitsViewModel @Inject constructor(
         }
     }
 
-    fun onResume(){
+    fun onResume() {
         loadAndEmitState()
     }
 
