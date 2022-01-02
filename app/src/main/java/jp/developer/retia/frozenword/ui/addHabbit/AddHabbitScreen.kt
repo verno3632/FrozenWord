@@ -17,9 +17,8 @@ import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 @Composable
 fun AddHabbitScreen(
     state: AddHabbitUiState,
-    onTitleChanged: (String) -> Unit = {},
     onSuggestionClicked: (String) -> Unit = {},
-    onTitleNextButtonClicked: () -> Unit = {},
+    onTitleNextButtonClicked: (String) -> Unit = {},
 
     onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
     onNextClicked: () -> Unit = {},
@@ -29,7 +28,6 @@ fun AddHabbitScreen(
             FirstPane(
                 defaultTitle = state.title,
                 sampleTitles = state.sampleTitle,
-                onTitleChanged = onTitleChanged,
                 onSuggestionClicked = onSuggestionClicked,
                 onTitleNextButtonClicked = onTitleNextButtonClicked,
             )
@@ -57,9 +55,8 @@ fun PreviewFirstPane() {
 fun FirstPane(
     defaultTitle: String,
     sampleTitles: List<String>,
-    onTitleChanged: (String) -> Unit = {},
     onSuggestionClicked: (String) -> Unit = {},
-    onTitleNextButtonClicked: () -> Unit = {},
+    onTitleNextButtonClicked: (String) -> Unit = {},
 ) {
     var title: String by remember { mutableStateOf(defaultTitle) }
     Column(
@@ -75,13 +72,12 @@ fun FirstPane(
             value = title,
             onValueChange = {
                 title = it
-                onTitleChanged(title)
             }
         )
         sampleTitles.take(3).forEach { Chip(it, onSuggestionClicked) }
         Button(
             modifier = Modifier.padding(top = 16.dp),
-            onClick = onTitleNextButtonClicked
+            onClick = { onTitleNextButtonClicked(title) }
         ) {
             Text("次へ")
         }

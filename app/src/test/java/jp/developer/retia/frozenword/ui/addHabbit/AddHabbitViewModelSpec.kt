@@ -16,37 +16,24 @@ object AddHabbitViewModelSpec : Spek({
     val addHabbitViewModel by memoized { AddHabbitViewModel(mockHabbitRepository) }
     setMainDispatcher()
 
-    describe("onHabbitTitleUpdated") {
-        val title = "title1"
-        beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
-        }
-
-        it("dummyHabbitsが渡される") {
-            assertThat(addHabbitViewModel.uiState.value).isEqualTo(
-                AddHabbitUiState.HabbitTitlePage(
-                    title,
-                    emptyList(),
-                    true
-                )
-            )
-        }
-    }
-
-    describe("onHabbitTitleUpdated") {
+    describe("onHabbitTitleNextButtonClicked") {
         val title = "title1"
         lateinit var actual: List<AddHabbitUiState>
         beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
             runBlockingTest {
                 actual = addHabbitViewModel.uiState.toList {
-                    addHabbitViewModel.onHabbitTitleNextButtonClicked()
+                    addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
                 }
             }
         }
 
         it("simpleHabbitTitle画面へ遷移") {
-            assertThat(actual[1]).isEqualTo(AddHabbitUiState.SimpleHabbitTitlePage(title, emptyList()))
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.SimpleHabbitTitlePage(
+                    title,
+                    emptyList()
+                )
+            )
         }
     }
 })

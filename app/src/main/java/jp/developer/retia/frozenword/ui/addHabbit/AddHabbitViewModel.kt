@@ -32,24 +32,12 @@ class AddHabbitViewModel @Inject constructor(
     private val _events = MutableSharedFlow<AddHabbitEvent>()
     val events: SharedFlow<AddHabbitEvent> = _events.asSharedFlow()
 
-    fun onHabbitTitleUpdated(habbitTitle: String) {
-        this.habbitTitle = habbitTitle
-        viewModelScope.launch {
-            _uiState.emit(
-                AddHabbitUiState.HabbitTitlePage(
-                    habbitTitle,
-                    titleSuggestion,
-                    habbitTitle.isNotEmpty()
-                )
-            )
-        }
-    }
-
     fun onTriggerUpdated(trigger: String) {
         this.trigger = trigger
     }
 
-    fun onHabbitTitleNextButtonClicked() {
+    fun onHabbitTitleNextButtonClicked(habbitTitle: String) {
+        this.habbitTitle = habbitTitle
         viewModelScope.launch {
             _uiState.emit(AddHabbitUiState.SimpleHabbitTitlePage(habbitTitle, emptyList()))
         }
