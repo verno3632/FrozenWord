@@ -22,10 +22,18 @@ class HabbitsViewModel @Inject constructor(
     val events: SharedFlow<HabbitsEvent> = _events.asSharedFlow()
 
     init {
+        loadAndEmitState()
+    }
+
+    private fun loadAndEmitState() {
         viewModelScope.launch(ioDispatcher) {
             val habbits = habbitRepository.getHabbitAndLogs()
             _uiState.emit(HabbitsUiState.Loaded(habbits))
         }
+    }
+
+    fun onResume(){
+        loadAndEmitState()
     }
 
     fun onClickActionButton() {
