@@ -17,37 +17,50 @@ object AddHabbitViewModelSpec : Spek({
     val addHabbitViewModel by memoized { AddHabbitViewModel(mockHabbitRepository) }
     setMainDispatcher()
 
-    describe("onHabbitTitleUpdated") {
+    describe("onHabbitTitleNextButtonClicked") {
         val title = "title1"
+        lateinit var actual: List<AddHabbitUiState>
         beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                }
+            }
         }
 
-        it("dummyHabbitsが渡される") {
-            assertThat(addHabbitViewModel.uiState.value).isEqualTo(
-                AddHabbitUiState.HabbitTitlePage(
+        it("simpleHabbitTitle画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.SimpleHabbitTitlePage(
                     title,
-                    emptyList(),
-                    true
+                    emptyList()
                 )
             )
         }
     }
 
-    describe("onHabbitTitleUpdated") {
+    describe("onSipmpleHabbitTitleCompleteClicked") {
         val title = "title1"
-        lateinit var actual: List<AddHabbitUiState>
+        val simpleTitle = "simpleTitle"
+        lateinit var actual: List<AddHabbitEvent>
         beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
             runBlockingTest {
-                actual = addHabbitViewModel.uiState.toList {
-                    addHabbitViewModel.onHabbitTitleNextButtonClicked()
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onSimpleHabbitTitleCompleteClicked(simpleTitle)
                 }
             }
         }
 
-        it("simpleHabbit画面へ遷移") {
-            assertThat(actual[1]).isEqualTo(AddHabbitUiState.ShortHabbitTitlePage(title, emptyList()))
+        it("simpleHabbitTitle画面へ遷移") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle)
+            }
         }
     }
 })

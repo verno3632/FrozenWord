@@ -18,7 +18,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @OptIn(InternalCoroutinesApi::class)
@@ -61,12 +60,10 @@ fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
 
     AddHabbitScreen(
         state = state,
-        onTitleChanged = addHabbitViewModel::onHabbitTitleUpdated,
         onSuggestionClicked = addHabbitViewModel::onSuggestionHabbitTitleClicked,
         onTitleNextButtonClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked,
 
-        onSimpleHabbitChanged = addHabbitViewModel::onShortHabbitTitleUpdated,
-        onCompleteClicked = addHabbitViewModel::onClickedOkButton,
-        onNextClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked
+        onSimpleHabbitTitleCompleteClicked = addHabbitViewModel::onSimpleHabbitTitleCompleteClicked,
+        onNextClicked = {}
     )
 }

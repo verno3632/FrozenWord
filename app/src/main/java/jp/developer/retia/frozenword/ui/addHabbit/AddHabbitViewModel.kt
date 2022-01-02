@@ -14,7 +14,7 @@ class AddHabbitViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var habbitTitle: String = ""
-    private var shortHabbitTitle: String = ""
+    private var simpleHabbitTitle: String = ""
     private var trigger: String? = null
 
     private val titleSuggestion = emptyList<String>()
@@ -32,38 +32,14 @@ class AddHabbitViewModel @Inject constructor(
     private val _events = MutableSharedFlow<AddHabbitEvent>()
     val events: SharedFlow<AddHabbitEvent> = _events.asSharedFlow()
 
-    fun onHabbitTitleUpdated(habbitTitle: String) {
-        this.habbitTitle = habbitTitle
-        viewModelScope.launch {
-            _uiState.emit(
-                AddHabbitUiState.HabbitTitlePage(
-                    habbitTitle,
-                    titleSuggestion,
-                    habbitTitle.isNotEmpty()
-                )
-            )
-        }
-    }
-
-    fun onShortHabbitTitleUpdated(shortHabbitTitle: String) {
-        this.shortHabbitTitle = shortHabbitTitle
-        viewModelScope.launch {
-            _uiState.emit(
-                AddHabbitUiState.ShortHabbitTitlePage(
-                    habbitTitle,
-                    emptyList()
-                )
-            )
-        }
-    }
-
     fun onTriggerUpdated(trigger: String) {
         this.trigger = trigger
     }
 
-    fun onHabbitTitleNextButtonClicked() {
+    fun onHabbitTitleNextButtonClicked(habbitTitle: String) {
+        this.habbitTitle = habbitTitle
         viewModelScope.launch {
-            _uiState.emit(AddHabbitUiState.ShortHabbitTitlePage(habbitTitle, emptyList()))
+            _uiState.emit(AddHabbitUiState.SimpleHabbitTitlePage(habbitTitle, emptyList()))
         }
     }
 
@@ -73,9 +49,10 @@ class AddHabbitViewModel @Inject constructor(
     fun onSkipButtonClicked() {
     }
 
-    fun onClickedOkButton() {
+    fun onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle: String) {
+        this.simpleHabbitTitle = simpleHabbitTitle
         viewModelScope.launch {
-            habbitRepository.insert(title = habbitTitle, trigger = shortHabbitTitle)
+            habbitRepository.insert(title = habbitTitle, trigger = simpleHabbitTitle)
             _events.emit(AddHabbitEvent.Back)
         }
     }
@@ -91,7 +68,7 @@ sealed class AddHabbitUiState {
         val enableButton: Boolean
     ) : AddHabbitUiState()
 
-    data class ShortHabbitTitlePage(val title: String, val sampleTitles: List<String>) :
+    data class SimpleHabbitTitlePage(val title: String, val sampleTitles: List<String>) :
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()
