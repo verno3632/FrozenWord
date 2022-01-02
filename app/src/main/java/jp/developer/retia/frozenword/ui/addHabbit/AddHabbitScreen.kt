@@ -58,7 +58,7 @@ fun FirstPane(
     onSuggestionClicked: (String) -> Unit = {},
     onTitleNextButtonClicked: (String) -> Unit = {},
 ) {
-    var title: String by remember { mutableStateOf(defaultTitle) }
+    val (title, setTitle) = remember { mutableStateOf(defaultTitle) }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,9 +70,7 @@ fun FirstPane(
         OutlinedTextField(
             modifier = Modifier.padding(top = 32.dp),
             value = title,
-            onValueChange = {
-                title = it
-            }
+            onValueChange = setTitle
         )
         sampleTitles.take(3).forEach { Chip(it, onSuggestionClicked) }
         Button(

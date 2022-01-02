@@ -20,15 +20,13 @@ fun AddSimpleHabbitTitleScreen(
     onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
-    var simpleHabbitTitle: String by remember { mutableStateOf("") }
+    val (simpleHabbitTitle, setSimpleHabbitTitle) = remember { mutableStateOf("") }
 
     AddSimpleHabbitTitleScreen(
         habbit = habbit,
         simpleHabbitTitle = simpleHabbitTitle,
         buttonEnabled = simpleHabbitTitle.isNotBlank(),
-        onSimpleHabbitTitleChanged = { changed ->
-            simpleHabbitTitle = changed
-        },
+        onSimpleHabbitTitleChanged = setSimpleHabbitTitle,
         onSimpleHabbitTitleCompleteClicked = { onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle) },
         onNextClicked = onNextClicked
     )
