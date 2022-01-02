@@ -20,6 +20,10 @@ fun AddHabbitScreen(
     onTitleChanged: (String) -> Unit = {},
     onSuggestionClicked: (String) -> Unit = {},
     onTitleNextButtonClicked: () -> Unit = {},
+
+    onSimpleHabbitChanged: (String) -> Unit = {},
+    onCompleteClicked: () -> Unit = {},
+    onNextClicked: () -> Unit = {},
 ) {
     when (state) {
         is AddHabbitUiState.HabbitTitlePage ->
@@ -30,7 +34,13 @@ fun AddHabbitScreen(
                 onSuggestionClicked = onSuggestionClicked,
                 onTitleNextButtonClicked = onTitleNextButtonClicked,
             )
-        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
+        is AddHabbitUiState.ShortHabbitTitlePage ->
+            AddSimpleHabbitScreen(
+                habbit = state.title,
+                onSimpleHabbitChanged = onSimpleHabbitChanged,
+                onCompleteClicked = onCompleteClicked,
+                onNextClicked = onNextClicked
+            )
         is AddHabbitUiState.TitlePage -> TODO()
     }
 }
@@ -63,7 +73,7 @@ fun FirstPane(
     ) {
         Text("継続したいことは？")
         OutlinedTextField(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.padding(top = 32.dp),
             value = title,
             onValueChange = {
                 title = it

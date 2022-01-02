@@ -36,24 +36,18 @@ object AddHabbitViewModelSpec : Spek({
 
     describe("onHabbitTitleUpdated") {
         val title = "title1"
-        lateinit var actual: List<AddHabbitEvent>
+        lateinit var actual: List<AddHabbitUiState>
         beforeEachTest {
             addHabbitViewModel.onHabbitTitleUpdated("title1")
             runBlockingTest {
-                actual = addHabbitViewModel.events.toList {
+                actual = addHabbitViewModel.uiState.toList {
                     addHabbitViewModel.onHabbitTitleNextButtonClicked()
                 }
             }
         }
 
-        it("Habbitsが保存される") {
-            coVerify {
-                mockHabbitRepository.insert(title = title, trigger = "")
-            }
-        }
-
-        it("closeが降ってくる") {
-            assertThat(actual).isEqualTo(listOf(AddHabbitEvent.Back))
+        it("simpleHabbit画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(AddHabbitUiState.ShortHabbitTitlePage(title, emptyList()))
         }
     }
 })
