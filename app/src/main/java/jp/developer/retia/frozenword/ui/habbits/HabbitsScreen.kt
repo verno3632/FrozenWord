@@ -57,20 +57,35 @@ fun Habbits(
             .wrapContentHeight()
     ) {
         items(habbits) { habbit ->
-            Card(modifier = Modifier.padding(2.dp)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(8.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(habbit.habbit.trigger, fontSize = 13.sp)
-                        Text(habbit.habbit.title, fontSize = 16.sp)
-                    }
-                    TaskDots(modifier = Modifier.weight(1f), 24)
-                }
+            Habbit(habbit)
+        }
+    }
+}
+
+@Composable
+fun Habbit(
+    habbit: HabbitAndLog
+) {
+    Habbit(habbit.habbit.trigger, habbit.habbit.title)
+}
+
+@Composable
+fun Habbit(
+    trigger: String,
+    title: String
+) {
+    Card(modifier = Modifier.padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(8.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(trigger, fontSize = 13.sp)
+                Text(title, fontSize = 16.sp)
             }
+            TaskDots(modifier = Modifier.weight(1f), 24)
         }
     }
 }
