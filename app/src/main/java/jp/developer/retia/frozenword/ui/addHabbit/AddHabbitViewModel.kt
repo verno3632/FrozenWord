@@ -54,7 +54,11 @@ class AddHabbitViewModel @Inject constructor(
         }
     }
 
-    fun onShortHabbitTitleNextButtonClicked() {
+    fun onSimpleHabbitTitleNextButtonClicked() {
+        viewModelScope.launch {
+            habbitRepository.insert(title = habbitTitle, trigger = shortHabbitTitle)
+            _events.emit(AddHabbitEvent.Back)
+        }
     }
 
     fun onSkipButtonClicked() {
