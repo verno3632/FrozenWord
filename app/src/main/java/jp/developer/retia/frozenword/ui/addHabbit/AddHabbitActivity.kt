@@ -66,6 +66,6 @@ fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
 
         onSimpleHabbitChanged = addHabbitViewModel::onSimpleHabbitTitleUpdated,
         onCompleteClicked = addHabbitViewModel::onClickedOkButton,
-        onNextClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked
+        onNextClicked = {}
     )
 }
