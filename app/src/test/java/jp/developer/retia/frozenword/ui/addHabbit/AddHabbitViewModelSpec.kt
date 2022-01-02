@@ -45,7 +45,7 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
 
-        it("simpleHabbit画面へ遷移") {
+        it("simpleHabbitTitle画面へ遷移") {
             assertThat(actual[1]).isEqualTo(AddHabbitUiState.SimpleHabbitTitlePage(title, emptyList()))
         }
     }

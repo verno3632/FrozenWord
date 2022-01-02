@@ -21,7 +21,7 @@ fun AddHabbitScreen(
     onSuggestionClicked: (String) -> Unit = {},
     onTitleNextButtonClicked: () -> Unit = {},
 
-    onSimpleHabbitChanged: (String) -> Unit = {},
+    onSimpleHabbitTitleChanged: (String) -> Unit = {},
     onCompleteClicked: () -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
@@ -35,9 +35,9 @@ fun AddHabbitScreen(
                 onTitleNextButtonClicked = onTitleNextButtonClicked,
             )
         is AddHabbitUiState.SimpleHabbitTitlePage ->
-            AddSimpleHabbitScreen(
+            AddSimpleHabbitTitleScreen(
                 habbit = state.title,
-                onSimpleHabbitChanged = onSimpleHabbitChanged,
+                onSimpleHabbitTitleChanged = onSimpleHabbitTitleChanged,
                 onCompleteClicked = onCompleteClicked,
                 onNextClicked = onNextClicked
             )

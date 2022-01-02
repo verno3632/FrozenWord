@@ -5,33 +5,31 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewAddSimpleHabbitScreen() {
-    AddSimpleHabbitScreen(habbit = "運動", simpleHabbit = "運動着に着替える", buttonEnabled = false)
+fun PreviewAddSimpleHabbitTitleScreen() {
+    AddSimpleHabbitTitleScreen(habbit = "運動", simpleHabbitTitle = "運動着に着替える", buttonEnabled = false)
 }
 
 @Composable
-fun AddSimpleHabbitScreen(
+fun AddSimpleHabbitTitleScreen(
     habbit: String,
-    onSimpleHabbitChanged: (String) -> Unit = {},
+    onSimpleHabbitTitleChanged: (String) -> Unit = {},
     onCompleteClicked: () -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
-    var simpleHabbit: String by remember { mutableStateOf("") }
+    var simpleHabbitTitle: String by remember { mutableStateOf("") }
 
-    AddSimpleHabbitScreen(
+    AddSimpleHabbitTitleScreen(
         habbit = habbit,
-        simpleHabbit = simpleHabbit,
-        buttonEnabled = simpleHabbit.isNotBlank(),
-        onSimpleHabbitChanged = { changed ->
-            simpleHabbit = changed
-            onSimpleHabbitChanged(simpleHabbit)
+        simpleHabbitTitle = simpleHabbitTitle,
+        buttonEnabled = simpleHabbitTitle.isNotBlank(),
+        onSimpleHabbitTitleChanged = { changed ->
+            simpleHabbitTitle = changed
+            onSimpleHabbitTitleChanged(simpleHabbitTitle)
         },
         onCompleteClicked = onCompleteClicked,
         onNextClicked = onNextClicked
@@ -39,11 +37,11 @@ fun AddSimpleHabbitScreen(
 }
 
 @Composable
-fun AddSimpleHabbitScreen(
+fun AddSimpleHabbitTitleScreen(
     habbit: String,
-    simpleHabbit: String,
+    simpleHabbitTitle: String,
     buttonEnabled: Boolean,
-    onSimpleHabbitChanged: (String) -> Unit = {},
+    onSimpleHabbitTitleChanged: (String) -> Unit = {},
     onCompleteClicked: () -> Unit = {},
     onNextClicked: () -> Unit = {},
 ) {
@@ -69,8 +67,8 @@ fun AddSimpleHabbitScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            value = simpleHabbit,
-            onValueChange = onSimpleHabbitChanged
+            value = simpleHabbitTitle,
+            onValueChange = onSimpleHabbitTitleChanged
         )
         Row(
             modifier = Modifier
