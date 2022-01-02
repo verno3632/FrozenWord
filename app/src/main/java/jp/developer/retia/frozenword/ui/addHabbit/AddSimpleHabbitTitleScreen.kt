@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import jp.developer.retia.frozenword.ui.habbits.Habbit
 
 @Preview(showBackground = true)
 @Composable
@@ -66,10 +67,14 @@ fun AddSimpleHabbitTitleScreen(
             value = simpleHabbitTitle,
             onValueChange = onSimpleHabbitTitleChanged
         )
+
+        Habbit(trigger = simpleHabbitTitle, title = habbit, modifier = Modifier.offset(y = 16.dp))
+
         Row(
             modifier = Modifier
                 .wrapContentHeight()
                 .wrapContentWidth()
+                .offset(y = 4.dp)
         ) {
             Button(
                 modifier = Modifier.padding(top = 16.dp),
