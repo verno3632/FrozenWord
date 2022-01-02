@@ -70,12 +70,13 @@ fun AddSimpleHabbitTitleScreen(
             onValueChange = onSimpleHabbitTitleChanged
         )
 
-        Habbit(trigger = simpleHabbitTitle, title = habbit)
+        Habbit(trigger = simpleHabbitTitle, title = habbit, modifier = Modifier.offset(y = 16.dp))
 
         Row(
             modifier = Modifier
                 .wrapContentHeight()
                 .wrapContentWidth()
+                .offset(y = 4.dp)
         ) {
             Button(
                 modifier = Modifier.padding(top = 16.dp),

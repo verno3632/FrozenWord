@@ -72,9 +72,10 @@ fun Habbit(
 @Composable
 fun Habbit(
     trigger: String,
-    title: String
+    title: String,
+    modifier: Modifier = Modifier
 ) {
-    Card(modifier = Modifier.padding(2.dp)) {
+    Card(modifier = modifier.padding(2.dp)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
