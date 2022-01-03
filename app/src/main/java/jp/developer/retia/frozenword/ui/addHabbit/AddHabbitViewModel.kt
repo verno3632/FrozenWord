@@ -16,6 +16,7 @@ class AddHabbitViewModel @Inject constructor(
     private var habbitTitle: String = ""
     private var simpleHabbitTitle: String = ""
     private var trigger: String? = null
+    private var place: String? = null
 
     private val titleSuggestion = emptyList<String>()
 
@@ -59,7 +60,8 @@ class AddHabbitViewModel @Inject constructor(
             habbitRepository.insert(
                 title = habbitTitle,
                 simpleHabbitTitle = simpleHabbitTitle,
-                trigger = ""
+                trigger = "",
+                place = ""
             )
             _events.emit(AddHabbitEvent.Back)
         }
@@ -71,13 +73,34 @@ class AddHabbitViewModel @Inject constructor(
             habbitRepository.insert(
                 title = habbitTitle,
                 simpleHabbitTitle = simpleHabbitTitle,
-                trigger = trigger
+                trigger = trigger,
+                place = ""
             )
             _events.emit(AddHabbitEvent.Back)
         }
     }
 
     fun onSuggestionHabbitTitleClicked(title: String) {
+    }
+
+    fun onHabbitTriggerNextButtonClicked(trigger: String) {
+        this.trigger = trigger
+        viewModelScope.launch {
+            _uiState.emit(AddHabbitUiState.HabbitPlacePage(habbitTitle, simpleHabbitTitle, trigger))
+        }
+    }
+
+    fun onHabbitPlaceCompleteClicked(place: String) {
+        this.place = place
+        viewModelScope.launch {
+            habbitRepository.insert(
+                title = habbitTitle,
+                simpleHabbitTitle = simpleHabbitTitle,
+                trigger = trigger.orEmpty(),
+                place = place.orEmpty(),
+            )
+            _events.emit(AddHabbitEvent.Back)
+        }
     }
 }
 
@@ -95,6 +118,11 @@ sealed class AddHabbitUiState {
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()
+    data class HabbitPlacePage(
+        val title: String,
+        val simpleHabbitTitle: String,
+        val trigger: String
+    ) : AddHabbitUiState()
 }
 
 sealed class AddHabbitEvent {

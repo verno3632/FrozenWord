@@ -59,7 +59,7 @@ object AddHabbitViewModelSpec : Spek({
 
         it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title, simpleTitle, "")
+                mockHabbitRepository.insert(title, simpleTitle, "", "")
             }
         }
     }
@@ -110,7 +110,63 @@ object AddHabbitViewModelSpec : Spek({
 
         it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title, simpleTitle, trigger)
+                mockHabbitRepository.insert(title, simpleTitle, trigger, "")
+            }
+        }
+    }
+
+    describe("onHabbitTriggerNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        val trigger = "trigger"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                }
+            }
+        }
+
+        it("場所入力画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitPlacePage(
+                    title,
+                    simpleHabbitTitle,
+                    trigger
+                )
+            )
+        }
+    }
+
+    describe("onHabbitPlaceCompleteClicked") {
+        val title = "title1"
+        val simpleTitle = "simpleTitle"
+        val trigger = "trigger"
+        val place = "place"
+        lateinit var actual: List<AddHabbitEvent>
+        beforeEachTest {
+            runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleTitle)
+                addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onHabbitPlaceCompleteClicked(place)
+                }
+            }
+        }
+
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle, trigger, place)
             }
         }
     }

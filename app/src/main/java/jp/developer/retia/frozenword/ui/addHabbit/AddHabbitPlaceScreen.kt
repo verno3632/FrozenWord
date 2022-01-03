@@ -12,44 +12,44 @@ import jp.developer.retia.frozenword.ui.habbits.HabbitCard
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewAddHabbitTriggerScreen() {
-    AddHabbitTriggerScreen(
+fun PreviewAddHabbitPlaceScreen() {
+    AddHabbitPlaceScreen(
         habbit = "運動",
         simpleHabbitTitle = "運動着に着替える",
         trigger = "朝起きたら",
-        buttonEnabled = false
     )
 }
 
 @Composable
-fun AddHabbitTriggerScreen(
-    habbit: String,
-    simpleHabbitTitle: String,
-    onHabbitTriggerCompleteClicked: (String) -> Unit = {},
-    onHabbitTriggerNextClicked: (String) -> Unit = {},
-) {
-    val (trigger, setTrigger) = remember { mutableStateOf("") }
-
-    AddHabbitTriggerScreen(
-        habbit = habbit,
-        simpleHabbitTitle = simpleHabbitTitle,
-        trigger = trigger,
-        buttonEnabled = simpleHabbitTitle.isNotBlank(),
-        onTriggerChanged = setTrigger,
-        onTriggerCompleteClicked = { onHabbitTriggerCompleteClicked(trigger) },
-        onTriggerNextClicked = { onHabbitTriggerNextClicked(trigger) }
-    )
-}
-
-@Composable
-fun AddHabbitTriggerScreen(
+fun AddHabbitPlaceScreen(
     habbit: String,
     simpleHabbitTitle: String,
     trigger: String,
-    buttonEnabled: Boolean,
-    onTriggerChanged: (String) -> Unit = {},
-    onTriggerCompleteClicked: () -> Unit = {},
-    onTriggerNextClicked: () -> Unit = {},
+    onHabbitPlaceCompleteClicked: (String) -> Unit = {},
+    onHabbitPlaceNextClicked: (String) -> Unit = {},
+) {
+    val (place, setPlace) = remember { mutableStateOf("") }
+
+    AddHabbitPlaceScreen(
+        habbit = habbit,
+        simpleHabbitTitle = simpleHabbitTitle,
+        trigger = trigger,
+        place = place,
+        onPlaceChanged = setPlace,
+        onPlaceCompleteClicked = { onHabbitPlaceCompleteClicked(place) },
+        onPlaceNextClicked = { onHabbitPlaceNextClicked(place) }
+    )
+}
+
+@Composable
+fun AddHabbitPlaceScreen(
+    habbit: String,
+    simpleHabbitTitle: String,
+    trigger: String,
+    place: String,
+    onPlaceChanged: (String) -> Unit = {},
+    onPlaceCompleteClicked: () -> Unit = {},
+    onPlaceNextClicked: () -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -60,7 +60,7 @@ fun AddHabbitTriggerScreen(
             .padding(32.dp)
     ) {
         Text(
-            "いつやる？",
+            "どこでやる？",
             style = MaterialTheme.typography.h6,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start
@@ -69,13 +69,14 @@ fun AddHabbitTriggerScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            value = trigger,
-            onValueChange = onTriggerChanged
+            value = place,
+            onValueChange = onPlaceChanged
         )
         HabbitCard(
             title = habbit,
             simpleHabbitTitle = simpleHabbitTitle,
             trigger = trigger,
+            place = place,
             modifier = Modifier.offset(y = 16.dp)
         )
 
@@ -86,8 +87,7 @@ fun AddHabbitTriggerScreen(
         ) {
             Button(
                 modifier = Modifier.padding(top = 16.dp),
-                onClick = onTriggerCompleteClicked,
-                enabled = buttonEnabled
+                onClick = onPlaceCompleteClicked,
             ) {
                 Text("これで作る")
             }
@@ -96,8 +96,7 @@ fun AddHabbitTriggerScreen(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .offset(12.dp),
-                onClick = onTriggerNextClicked,
-                enabled = buttonEnabled
+                onClick = onPlaceNextClicked,
             ) {
                 Text("達成率を上げる")
             }
