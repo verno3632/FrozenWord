@@ -74,7 +74,10 @@ fun FirstPane(
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Text("継続したいことは？")
+        Text(
+            "継続したいことは？",
+            style = MaterialTheme.typography.h6,
+        )
         OutlinedTextField(
             modifier = Modifier.padding(top = 32.dp),
             value = title,

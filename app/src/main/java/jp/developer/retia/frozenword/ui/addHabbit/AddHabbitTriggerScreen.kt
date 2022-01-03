@@ -61,7 +61,7 @@ fun AddHabbitTriggerScreen(
     ) {
         Text(
             "いつやる？",
-            style = MaterialTheme.typography.h1,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start
         )

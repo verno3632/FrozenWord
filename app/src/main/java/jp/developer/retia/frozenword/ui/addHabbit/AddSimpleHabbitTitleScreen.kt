@@ -56,8 +56,8 @@ fun AddSimpleHabbitTitleScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(habbit, style = MaterialTheme.typography.subtitle1)
-            Text("のために1分でできる習慣は？", style = MaterialTheme.typography.subtitle1)
+            Text(habbit, style = MaterialTheme.typography.h6)
+            Text("のために1分でできる習慣は？", style = MaterialTheme.typography.h6)
             Text("1分間の習慣を行えばその日は達成！忙しければそこで終わっても良いし、やる気があれば続けてやっても良いです！")
         }
         OutlinedTextField(
