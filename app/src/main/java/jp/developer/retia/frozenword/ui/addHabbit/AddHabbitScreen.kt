@@ -21,7 +21,9 @@ fun AddHabbitScreen(
     onTitleNextButtonClicked: (String) -> Unit = {},
 
     onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
-    onNextClicked: () -> Unit = {},
+    onNextClicked: (String) -> Unit = {},
+
+    onHabbitTriggerCompleteClicked: (String) -> Unit = {}
 ) {
     when (state) {
         is AddHabbitUiState.HabbitTitlePage ->
@@ -36,6 +38,12 @@ fun AddHabbitScreen(
                 habbit = state.title,
                 onSimpleHabbitTitleCompleteClicked = onSimpleHabbitTitleCompleteClicked,
                 onNextClicked = onNextClicked
+            )
+        is AddHabbitUiState.HabbitTriggerPage ->
+            AddHabbitTriggerScreen(
+                habbit = state.title,
+                simpleHabbitTitle = state.simpleHabbitTitle,
+                onHabbitTriggerCompleteClicked = onHabbitTriggerCompleteClicked
             )
         is AddHabbitUiState.TitlePage -> TODO()
     }
@@ -66,7 +74,10 @@ fun FirstPane(
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Text("継続したいことは？")
+        Text(
+            "継続したいことは？",
+            style = MaterialTheme.typography.h6,
+        )
         OutlinedTextField(
             modifier = Modifier.padding(top = 32.dp),
             value = title,

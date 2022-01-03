@@ -51,7 +51,7 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
 
-        it("simpleHabbitTitle画面へ遷移") {
+        it("戻る") {
             assertThat(actual[0]).isEqualTo(
                 AddHabbitEvent.Back
             )
@@ -59,7 +59,58 @@ object AddHabbitViewModelSpec : Spek({
 
         it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title, simpleTitle)
+                mockHabbitRepository.insert(title, simpleTitle, "")
+            }
+        }
+    }
+
+    describe("onSimpleHabbitTitleNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+                }
+            }
+        }
+
+        it("トリガー画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitTriggerPage(
+                    title,
+                    simpleHabbitTitle
+                )
+            )
+        }
+    }
+
+    describe("onHabbitTriggerCompleteClicked") {
+        val title = "title1"
+        val simpleTitle = "simpleTitle"
+        val trigger = "trigger"
+        lateinit var actual: List<AddHabbitEvent>
+        beforeEachTest {
+            runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleTitle)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onHabbitTriggerCompleteClicked(trigger)
+                }
+            }
+        }
+
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle, trigger)
             }
         }
     }

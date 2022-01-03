@@ -43,7 +43,11 @@ class AddHabbitViewModel @Inject constructor(
         }
     }
 
-    fun onSimpleHabbitTitleNextButtonClicked() {
+    fun onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle: String) {
+        this.simpleHabbitTitle = simpleHabbitTitle
+        viewModelScope.launch {
+            _uiState.emit(AddHabbitUiState.HabbitTriggerPage(habbitTitle, simpleHabbitTitle))
+        }
     }
 
     fun onSkipButtonClicked() {
@@ -52,7 +56,23 @@ class AddHabbitViewModel @Inject constructor(
     fun onSimpleHabbitTitleCompleteClicked(simpleHabbitTitle: String) {
         this.simpleHabbitTitle = simpleHabbitTitle
         viewModelScope.launch {
-            habbitRepository.insert(title = habbitTitle, trigger = simpleHabbitTitle)
+            habbitRepository.insert(
+                title = habbitTitle,
+                simpleHabbitTitle = simpleHabbitTitle,
+                trigger = ""
+            )
+            _events.emit(AddHabbitEvent.Back)
+        }
+    }
+
+    fun onHabbitTriggerCompleteClicked(trigger: String) {
+        this.trigger = trigger
+        viewModelScope.launch {
+            habbitRepository.insert(
+                title = habbitTitle,
+                simpleHabbitTitle = simpleHabbitTitle,
+                trigger = trigger
+            )
             _events.emit(AddHabbitEvent.Back)
         }
     }
@@ -69,6 +89,9 @@ sealed class AddHabbitUiState {
     ) : AddHabbitUiState()
 
     data class SimpleHabbitTitlePage(val title: String, val sampleTitles: List<String>) :
+        AddHabbitUiState()
+
+    data class HabbitTriggerPage(val title: String, val simpleHabbitTitle: String) :
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()
