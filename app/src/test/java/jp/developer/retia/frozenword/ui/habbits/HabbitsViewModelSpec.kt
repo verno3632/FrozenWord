@@ -44,10 +44,10 @@ object HabbitsViewModelSpec : Spek({
     describe("onResume") {
         val habbits = listOf(mockk<HabbitAndLog>())
         beforeEachTest {
-            coEvery { mockHabbitRepository.getHabbitAndLogs() } returnsMany (listOf(
+            coEvery { mockHabbitRepository.getHabbitAndLogs() } returnsMany listOf(
                 emptyList(),
                 habbits
-            ))
+            )
 
             habbitsViewModel.onResume()
         }
