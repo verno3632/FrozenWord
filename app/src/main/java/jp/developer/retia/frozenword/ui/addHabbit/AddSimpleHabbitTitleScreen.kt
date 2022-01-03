@@ -7,7 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.developer.retia.frozenword.ui.habbits.Habbit
+import jp.developer.retia.frozenword.ui.habbits.HabbitCard
 
 @Preview(showBackground = true)
 @Composable
@@ -68,7 +68,12 @@ fun AddSimpleHabbitTitleScreen(
             onValueChange = onSimpleHabbitTitleChanged
         )
 
-        Habbit(simpleHabbitTitle = simpleHabbitTitle, title = habbit, trigger = "", modifier = Modifier.offset(y = 16.dp))
+        HabbitCard(
+            simpleHabbitTitle = simpleHabbitTitle,
+            title = habbit,
+            trigger = "",
+            modifier = Modifier.offset(y = 16.dp)
+        )
 
         Row(
             modifier = Modifier

@@ -50,9 +50,6 @@ class AddHabbitViewModel @Inject constructor(
         }
     }
 
-    fun onHabbitTriggerCompleteClicked(trigger: String) {
-
-    }
 
     fun onSkipButtonClicked() {
     }
@@ -64,6 +61,18 @@ class AddHabbitViewModel @Inject constructor(
                 title = habbitTitle,
                 simpleHabbitTitle = simpleHabbitTitle,
                 trigger = ""
+            )
+            _events.emit(AddHabbitEvent.Back)
+        }
+    }
+
+    fun onHabbitTriggerCompleteClicked(trigger: String) {
+        this.trigger = trigger
+        viewModelScope.launch {
+            habbitRepository.insert(
+                title = habbitTitle,
+                simpleHabbitTitle = simpleHabbitTitle,
+                trigger = trigger
             )
             _events.emit(AddHabbitEvent.Back)
         }

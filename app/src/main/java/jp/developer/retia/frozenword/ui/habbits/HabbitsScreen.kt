@@ -75,20 +75,24 @@ fun Habbits(
             .wrapContentHeight()
     ) {
         items(habbits) { habbit ->
-            Habbit(habbit)
+            HabbitCard(habbit)
         }
     }
 }
 
 @Composable
-fun Habbit(
+fun HabbitCard(
     habbit: HabbitAndLog
 ) {
-    Habbit(habbit.habbit.trigger, habbit.habbit.title, habbit.habbit.trigger)
+    HabbitCard(
+        title = habbit.habbit.title,
+        simpleHabbitTitle = habbit.habbit.simpleHabbitTitle,
+        trigger = habbit.habbit.trigger
+    )
 }
 
 @Composable
-fun Habbit(
+fun HabbitCard(
     title: String,
     simpleHabbitTitle: String,
     trigger: String? = null,
