@@ -26,7 +26,7 @@ fun AddHabbitPlaceScreen(
     simpleHabbitTitle: String,
     trigger: String,
     onHabbitPlaceCompleteClicked: (String) -> Unit = {},
-    onNextClicked: () -> Unit = {},
+    onHabbitPlaceNextClicked: (String) -> Unit = {},
 ) {
     val (place, setPlace) = remember { mutableStateOf("") }
 
@@ -37,7 +37,7 @@ fun AddHabbitPlaceScreen(
         place = place,
         onPlaceChanged = setPlace,
         onPlaceCompleteClicked = { onHabbitPlaceCompleteClicked(place) },
-        onPlaceNextClicked = onNextClicked
+        onPlaceNextClicked = { onHabbitPlaceNextClicked(place) }
     )
 }
 

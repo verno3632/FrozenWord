@@ -79,6 +79,13 @@ class AddHabbitViewModel @Inject constructor(
 
     fun onSuggestionHabbitTitleClicked(title: String) {
     }
+
+    fun onHabbitTriggerNextButtonClicked(trigger: String) {
+        this.trigger = trigger
+        viewModelScope.launch {
+            _uiState.emit(AddHabbitUiState.HabbitPlacePage(habbitTitle, simpleHabbitTitle, trigger))
+        }
+    }
 }
 
 sealed class AddHabbitUiState {
@@ -95,6 +102,11 @@ sealed class AddHabbitUiState {
         AddHabbitUiState()
 
     data class TitlePage(val title: String, val sampleTItles: List<String>) : AddHabbitUiState()
+    data class HabbitPlacePage(
+        val title: String,
+        val simpleHabbitTitle: String,
+        val trigger: String
+    ) : AddHabbitUiState()
 }
 
 sealed class AddHabbitEvent {

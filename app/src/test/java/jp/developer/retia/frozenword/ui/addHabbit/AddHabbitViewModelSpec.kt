@@ -114,4 +114,30 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
     }
+
+    describe("onHabbitTriggerNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        val trigger = "trigger"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                }
+            }
+        }
+
+        it("場所入力画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitPlacePage(
+                    title,
+                    simpleHabbitTitle,
+                    trigger
+                )
+            )
+        }
+    }
 })

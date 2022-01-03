@@ -23,7 +23,11 @@ fun AddHabbitScreen(
     onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
     onNextClicked: (String) -> Unit = {},
 
-    onHabbitTriggerCompleteClicked: (String) -> Unit = {}
+    onHabbitTriggerCompleteClicked: (String) -> Unit = {},
+    onHabbitTriggerNextClicked: (String) -> Unit = {},
+
+    onHabbitPlaceCompleteClicked: (String) -> Unit = {},
+    onHabbitPlaceNextClicked: (String) -> Unit = {}
 ) {
     when (state) {
         is AddHabbitUiState.HabbitTitlePage ->
@@ -43,7 +47,16 @@ fun AddHabbitScreen(
             AddHabbitTriggerScreen(
                 habbit = state.title,
                 simpleHabbitTitle = state.simpleHabbitTitle,
-                onHabbitTriggerCompleteClicked = onHabbitTriggerCompleteClicked
+                onHabbitTriggerCompleteClicked = onHabbitTriggerCompleteClicked,
+                onHabbitTriggerNextClicked = onHabbitTriggerNextClicked
+            )
+        is AddHabbitUiState.HabbitPlacePage ->
+            AddHabbitPlaceScreen(
+                habbit = state.title,
+                simpleHabbitTitle = state.simpleHabbitTitle,
+                trigger = state.trigger,
+                onHabbitPlaceCompleteClicked = onHabbitPlaceCompleteClicked,
+                onHabbitPlaceNextClicked = onHabbitPlaceNextClicked
             )
         is AddHabbitUiState.TitlePage -> TODO()
     }

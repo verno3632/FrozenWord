@@ -26,7 +26,7 @@ fun AddHabbitTriggerScreen(
     habbit: String,
     simpleHabbitTitle: String,
     onHabbitTriggerCompleteClicked: (String) -> Unit = {},
-    onNextClicked: () -> Unit = {},
+    onHabbitTriggerNextClicked: (String) -> Unit = {},
 ) {
     val (trigger, setTrigger) = remember { mutableStateOf("") }
 
@@ -37,7 +37,7 @@ fun AddHabbitTriggerScreen(
         buttonEnabled = simpleHabbitTitle.isNotBlank(),
         onTriggerChanged = setTrigger,
         onTriggerCompleteClicked = { onHabbitTriggerCompleteClicked(trigger) },
-        onTriggerNextClicked = onNextClicked
+        onTriggerNextClicked = { onHabbitTriggerNextClicked(trigger) }
     )
 }
 
