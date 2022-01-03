@@ -114,5 +114,4 @@ object AddHabbitViewModelSpec : Spek({
             }
         }
     }
-
 })
