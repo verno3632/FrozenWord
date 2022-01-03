@@ -16,6 +16,7 @@ class AddHabbitViewModel @Inject constructor(
     private var habbitTitle: String = ""
     private var simpleHabbitTitle: String = ""
     private var trigger: String? = null
+    private var place: String? = null
 
     private val titleSuggestion = emptyList<String>()
 
@@ -86,6 +87,19 @@ class AddHabbitViewModel @Inject constructor(
         this.trigger = trigger
         viewModelScope.launch {
             _uiState.emit(AddHabbitUiState.HabbitPlacePage(habbitTitle, simpleHabbitTitle, trigger))
+        }
+    }
+
+    fun onHabbitPlaceCompleteClicked(place: String) {
+        this.place = place
+        viewModelScope.launch {
+            habbitRepository.insert(
+                title = habbitTitle,
+                simpleHabbitTitle = simpleHabbitTitle,
+                trigger = trigger.orEmpty(),
+                place = place.orEmpty(),
+            )
+            _events.emit(AddHabbitEvent.Back)
         }
     }
 }

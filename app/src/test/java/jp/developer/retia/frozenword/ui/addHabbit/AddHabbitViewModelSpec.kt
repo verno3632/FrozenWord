@@ -140,4 +140,34 @@ object AddHabbitViewModelSpec : Spek({
             )
         }
     }
+
+    describe("onHabbitPlaceCompleteClicked") {
+        val title = "title1"
+        val simpleTitle = "simpleTitle"
+        val trigger = "trigger"
+        val place = "place"
+        lateinit var actual: List<AddHabbitEvent>
+        beforeEachTest {
+            runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleTitle)
+                addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onHabbitPlaceCompleteClicked(place)
+                }
+            }
+        }
+
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle, trigger, place)
+            }
+        }
+    }
 })
