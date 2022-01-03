@@ -37,7 +37,8 @@ fun PreviewHabbits() {
                             title = "hogehoge",
                             trigger = "まるまるしたら",
                             simpleHabbitTitle = "なになにする"
-                        ), emptyList()
+                        ),
+                        emptyList()
                     ),
                     HabbitAndLog(
                         Habbit(
