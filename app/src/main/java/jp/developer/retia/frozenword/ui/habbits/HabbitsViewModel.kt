@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -41,6 +42,12 @@ class HabbitsViewModel @Inject constructor(
             _events.emit(HabbitsEvent.NavigateToAdd)
         }
     }
+
+    fun onClickHabbitCard(habbit: Habbit) {
+        viewModelScope.launch(ioDispatcher) {
+            _events.emit(HabbitsEvent.NavigateToStart(habbit))
+        }
+    }
 }
 
 sealed class HabbitsUiState {
@@ -50,4 +57,5 @@ sealed class HabbitsUiState {
 sealed class HabbitsEvent {
     object Back : HabbitsEvent()
     object NavigateToAdd : HabbitsEvent()
+    data class NavigateToStart(val habbit: Habbit) : HabbitsEvent()
 }

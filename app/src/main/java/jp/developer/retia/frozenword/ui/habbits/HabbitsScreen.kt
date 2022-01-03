@@ -2,6 +2,7 @@ package jp.developer.retia.frozenword.ui.habbits
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -60,11 +61,14 @@ fun PreviewHabbits() {
 @Composable
 fun HabbitsScreen(
     uiState: HabbitsUiState,
-    onClickActionButton: (() -> Unit) = {}
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     when (uiState) {
         is HabbitsUiState.Loaded -> {
-            Habbits(habbits = uiState.habbits, onClickActionButton)
+            Habbits(
+                habbits = uiState.habbits,
+                onClickHabbitCard = onClickHabbitCard,
+            )
         }
     }
 }
@@ -73,7 +77,7 @@ fun HabbitsScreen(
 @Composable
 fun Habbits(
     habbits: List<HabbitAndLog>,
-    onClickActionButton: (() -> Unit) = {}
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -81,20 +85,22 @@ fun Habbits(
             .wrapContentHeight()
     ) {
         items(habbits) { habbit ->
-            HabbitCard(habbit)
+            HabbitCard(habbit = habbit, onClickHabbitCard = onClickHabbitCard)
         }
     }
 }
 
 @Composable
 fun HabbitCard(
-    habbit: HabbitAndLog
+    habbit: HabbitAndLog,
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     HabbitCard(
         title = habbit.habbit.title,
         simpleHabbitTitle = habbit.habbit.simpleHabbitTitle,
         trigger = habbit.habbit.trigger,
-        place = habbit.habbit.place
+        place = habbit.habbit.place,
+        onClick = { onClickHabbitCard(habbit.habbit) }
     )
 }
 
@@ -104,6 +110,7 @@ fun HabbitCard(
     simpleHabbitTitle: String,
     trigger: String? = null,
     place: String? = null,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier.padding(2.dp)) {
@@ -111,6 +118,7 @@ fun HabbitCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .clickable { onClick() }
                 .padding(8.dp)
         ) {
             Column(modifier = Modifier.weight(1f)) {
