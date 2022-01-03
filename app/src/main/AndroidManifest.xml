@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.addHabbit.AddHabbitActivity" />
+        <activity android:name=".ui.watch.WatchActivity" />
 
         <service
             android:name=".FrozenWordAccessibilityService"
