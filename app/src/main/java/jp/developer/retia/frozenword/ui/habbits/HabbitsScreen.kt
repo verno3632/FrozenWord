@@ -28,7 +28,8 @@ fun PreviewHabbits() {
                         Habbit(
                             title = "hogehoge",
                             trigger = "まるまるしたら",
-                            simpleHabbitTitle = "何何する"
+                            simpleHabbitTitle = "何何する",
+                            place = "どこどこで"
                         ),
                         emptyList()
                     ),
@@ -36,7 +37,8 @@ fun PreviewHabbits() {
                         Habbit(
                             title = "hogehoge",
                             trigger = "まるまるしたら",
-                            simpleHabbitTitle = "なになにする"
+                            simpleHabbitTitle = "なになにする",
+                            place = "どこどこで"
                         ),
                         emptyList()
                     ),
@@ -44,7 +46,8 @@ fun PreviewHabbits() {
                         Habbit(
                             title = "hogehoge",
                             trigger = "まるまるしたら",
-                            simpleHabbitTitle = "naninaniする"
+                            simpleHabbitTitle = "なになにする",
+                            place = "どこどこで"
                         ),
                         emptyList()
                     ),
@@ -90,7 +93,8 @@ fun HabbitCard(
     HabbitCard(
         title = habbit.habbit.title,
         simpleHabbitTitle = habbit.habbit.simpleHabbitTitle,
-        trigger = habbit.habbit.trigger
+        trigger = habbit.habbit.trigger,
+        place = habbit.habbit.place
     )
 }
 
@@ -99,6 +103,7 @@ fun HabbitCard(
     title: String,
     simpleHabbitTitle: String,
     trigger: String? = null,
+    place: String? = null,
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier.padding(2.dp)) {
@@ -112,6 +117,9 @@ fun HabbitCard(
                 Text(title, fontSize = 12.sp)
                 trigger?.let {
                     Text(trigger, fontSize = 12.sp)
+                }
+                place?.let {
+                    Text(place + "で", fontSize = 12.sp)
                 }
                 Text(simpleHabbitTitle, fontSize = 16.sp)
             }

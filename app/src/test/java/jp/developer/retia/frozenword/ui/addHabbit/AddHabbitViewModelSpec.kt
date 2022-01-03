@@ -59,7 +59,7 @@ object AddHabbitViewModelSpec : Spek({
 
         it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title, simpleTitle, "")
+                mockHabbitRepository.insert(title, simpleTitle, "", "")
             }
         }
     }
@@ -110,7 +110,7 @@ object AddHabbitViewModelSpec : Spek({
 
         it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title, simpleTitle, trigger)
+                mockHabbitRepository.insert(title, simpleTitle, trigger, "")
             }
         }
     }

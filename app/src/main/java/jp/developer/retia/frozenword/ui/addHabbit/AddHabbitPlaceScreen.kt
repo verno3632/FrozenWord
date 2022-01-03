@@ -76,6 +76,7 @@ fun AddHabbitPlaceScreen(
             title = habbit,
             simpleHabbitTitle = simpleHabbitTitle,
             trigger = trigger,
+            place = place,
             modifier = Modifier.offset(y = 16.dp)
         )
 

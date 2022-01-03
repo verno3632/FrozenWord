@@ -59,7 +59,8 @@ class AddHabbitViewModel @Inject constructor(
             habbitRepository.insert(
                 title = habbitTitle,
                 simpleHabbitTitle = simpleHabbitTitle,
-                trigger = ""
+                trigger = "",
+                place = ""
             )
             _events.emit(AddHabbitEvent.Back)
         }
@@ -71,7 +72,8 @@ class AddHabbitViewModel @Inject constructor(
             habbitRepository.insert(
                 title = habbitTitle,
                 simpleHabbitTitle = simpleHabbitTitle,
-                trigger = trigger
+                trigger = trigger,
+                place = ""
             )
             _events.emit(AddHabbitEvent.Back)
         }

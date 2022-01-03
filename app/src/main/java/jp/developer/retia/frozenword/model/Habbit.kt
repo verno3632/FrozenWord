@@ -9,4 +9,5 @@ data class Habbit(
     val title: String,
     val simpleHabbitTitle: String,
     val trigger: String,
+    val place: String,
 )
