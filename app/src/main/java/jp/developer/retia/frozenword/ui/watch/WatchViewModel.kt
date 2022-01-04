@@ -36,7 +36,7 @@ class WatchViewModel @AssistedInject constructor(
     }
 
     fun onCompleted() {
-        viewModelScope.launch(ioDispatcher){
+        viewModelScope.launch(ioDispatcher) {
             habbitRepository.insertLog(habbitId, Date(), "")
         }
     }
