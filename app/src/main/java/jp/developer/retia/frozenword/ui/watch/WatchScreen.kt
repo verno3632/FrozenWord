@@ -132,7 +132,8 @@ fun IndicatorButton(
 ) {
     val (message, progress) = when (indicatorState) {
         is IndicatorState.Waiting -> "開始" to 1f
-        is IndicatorState.Doing -> (indicatorState.remainingTime / 10).toString() to indicatorState.remainingTime / 600f
+        is IndicatorState.Doing ->
+            (indicatorState.remainingTime / 10).toString() to indicatorState.remainingTime / 600f
         IndicatorState.Done -> "✔" to 0f
     }
     Box(
