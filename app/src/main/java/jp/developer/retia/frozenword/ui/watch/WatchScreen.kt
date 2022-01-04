@@ -1,10 +1,13 @@
 package jp.developer.retia.frozenword.ui.watch
 
 import androidx.annotation.IntRange
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,11 +17,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Preview
 @Composable
@@ -59,13 +67,13 @@ fun WatchScreen(
         }
         Text(simpleHabbitTitle, style = MaterialTheme.typography.h5)
 
-        IndicatorButton(IndicatorState.Waiting)
+        IndicatorButton()
     }
 }
 
 sealed class IndicatorState {
     object Waiting : IndicatorState()
-    data class Doing(@IntRange(from = 1, to = 60) val remainingTime: Int) : IndicatorState()
+    data class Doing(@IntRange(from = 1, to = 600) val remainingTime: Int) : IndicatorState()
     object Done : IndicatorState()
 }
 
@@ -100,12 +108,29 @@ fun PreviewDoneIndicatorButton() {
 }
 
 @Composable
+fun IndicatorButton() {
+    var state: IndicatorState by remember { mutableStateOf(IndicatorState.Waiting) }
+    val composableScope = rememberCoroutineScope()
+    IndicatorButton(indicatorState = state, onClickStartButton = {
+        composableScope.launch {
+            (0 until 599).forEach { passed ->
+                state = IndicatorState.Doing(600 - passed)
+                delay(100)
+            }
+
+            state = IndicatorState.Done
+        }
+    })
+}
+
+@Composable
 fun IndicatorButton(
-    indicatorState: IndicatorState
+    indicatorState: IndicatorState,
+    onClickStartButton: () -> Unit = {}
 ) {
     val (message, progress) = when (indicatorState) {
         is IndicatorState.Waiting -> "開始" to 1f
-        is IndicatorState.Doing -> indicatorState.remainingTime.toString() to indicatorState.remainingTime / 60f
+        is IndicatorState.Doing -> (indicatorState.remainingTime / 10).toString() to indicatorState.remainingTime / 600f
         IndicatorState.Done -> "✔" to 0f
     }
     Box(
@@ -120,6 +145,7 @@ fun IndicatorButton(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .align(alignment = Alignment.Center)
+                .clickable { onClickStartButton() }
         )
         Text(
             message,
