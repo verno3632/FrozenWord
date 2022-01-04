@@ -103,6 +103,11 @@ fun PreviewDoneIndicatorButton() {
 fun IndicatorButton(
     indicatorState: IndicatorState
 ) {
+    val (message, progress) = when (indicatorState) {
+        is IndicatorState.Waiting -> "開始" to 1f
+        is IndicatorState.Doing -> indicatorState.remainingTime.toString() to indicatorState.remainingTime / 60f
+        IndicatorState.Done -> "✔" to 0f
+    }
     Box(
         modifier = Modifier
             .padding(top = 10.dp)
@@ -110,20 +115,16 @@ fun IndicatorButton(
             .height(100.dp)
     ) {
         CircularProgressIndicator(
-            progress = 1f,
+            progress = progress,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .align(alignment = Alignment.Center)
         )
-        when (indicatorState) {
-            is IndicatorState.Waiting -> {
-                Text(
-                    "開始",
-                    modifier = Modifier
-                        .align(alignment = Alignment.Center)
-                )
-            }
-        }
+        Text(
+            message,
+            modifier = Modifier
+                .align(alignment = Alignment.Center)
+        )
     }
 }
