@@ -5,6 +5,6 @@ import androidx.room.Relation
 
 data class HabbitAndLog(
     @Embedded val habbit: Habbit,
-    @Relation(parentColumn = "id", entityColumn = "id")
+    @Relation(parentColumn = "id", entityColumn = "habbitId")
     val logs: List<Log>
 )

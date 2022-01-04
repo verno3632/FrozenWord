@@ -3,6 +3,7 @@ package jp.developer.retia.frozenword.ui.habbits
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
+import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
@@ -71,6 +72,22 @@ object HabbitsViewModelSpec : Spek({
 
         it("週間追加画面に遷移する") {
             assertThat(actual).isEqualTo(listOf(HabbitsEvent.NavigateToAdd))
+        }
+    }
+
+    describe("onClickHabbitCard") {
+        val habbit = mockk<Habbit>()
+        lateinit var actual: List<HabbitsEvent>
+        beforeEachTest {
+            runBlockingTest {
+                actual = habbitsViewModel.events.toList {
+                    habbitsViewModel.onClickHabbitCard(habbit)
+                }
+            }
+        }
+
+        it("習慣開始画面に遷移する") {
+            assertThat(actual).isEqualTo(listOf(HabbitsEvent.NavigateToStart(habbit)))
         }
     }
 })

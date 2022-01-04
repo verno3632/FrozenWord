@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import jp.developer.retia.frozenword.db.AppDatabase
 import jp.developer.retia.frozenword.db.HabbitDao
+import jp.developer.retia.frozenword.db.LogDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -29,6 +30,12 @@ object MainModule {
     @Singleton
     fun provideHabbitDao(appDatabase: AppDatabase): HabbitDao {
         return appDatabase.habbitDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogDao(appDatabase: AppDatabase): LogDao {
+        return appDatabase.logDao()
     }
 
     @Provides

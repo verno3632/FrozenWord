@@ -12,6 +12,9 @@ interface LogDao {
     @Insert(onConflict = REPLACE)
     suspend fun insertAll(vararg log: Log)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun insert(log: Log)
+
     @Update
     suspend fun updateAll(vararg log: Log)
 

@@ -16,8 +16,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.ui.addHabbit.AddHabbitActivity
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
+import jp.developer.retia.frozenword.ui.watch.WatchActivity
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -45,6 +47,7 @@ class HabbitsActivity : ComponentActivity() {
                     when (event) {
                         HabbitsEvent.Back -> onBackPressed()
                         HabbitsEvent.NavigateToAdd -> navigateToAdd()
+                        is HabbitsEvent.NavigateToStart -> navigateToStart(event.habbit)
                     }
                 }
             }
@@ -60,6 +63,10 @@ class HabbitsActivity : ComponentActivity() {
         startActivity(Intent(this, AddHabbitActivity::class.java))
     }
 
+    private fun navigateToStart(habbit: Habbit) {
+        startActivity(WatchActivity.createIntent(this, habbit))
+    }
+
     companion object {
         fun createIntent(context: Context): Intent = Intent(context, HabbitsActivity::class.java)
     }
@@ -72,12 +79,12 @@ fun HabbitsScreen(habbitsViewModel: HabbitsViewModel) {
     Scaffold(
         floatingActionButton =
         {
-            FloatingActionButton(onClick = { habbitsViewModel.onClickActionButton() }) {
+            FloatingActionButton(onClick = habbitsViewModel::onClickActionButton) {
                 Icon(Icons.Filled.Add, contentDescription = "追加")
             }
         },
         content = {
-            HabbitsScreen(state) { habbitsViewModel.onClickActionButton() }
+            HabbitsScreen(state, habbitsViewModel::onClickHabbitCard)
         }
     )
 }

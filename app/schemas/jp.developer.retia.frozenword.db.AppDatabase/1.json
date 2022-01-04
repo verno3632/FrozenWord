@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bcf0c28c47a60ce7a32c38c54c6b92f3",
+    "identityHash": "43480cf0ee4e36727f90c4bd1d1d6057",
     "entities": [
       {
         "tableName": "Habbit",
@@ -50,11 +50,17 @@
       },
       {
         "tableName": "Log",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` INTEGER NOT NULL, `message` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `habbitId` INTEGER NOT NULL, `time` INTEGER NOT NULL, `message` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "habbitId",
+            "columnName": "habbitId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -84,7 +90,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bcf0c28c47a60ce7a32c38c54c6b92f3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '43480cf0ee4e36727f90c4bd1d1d6057')"
     ]
   }
 }
