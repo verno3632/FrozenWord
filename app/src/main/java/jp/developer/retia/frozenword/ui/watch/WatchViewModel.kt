@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import java.util.Date
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +20,6 @@ class WatchViewModel @AssistedInject constructor(
     private val habbitRepository: HabbitRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
     @AssistedFactory
     interface ViewModelAssistedFactory {
         fun create(habbitId: Int): WatchViewModel
@@ -32,6 +32,12 @@ class WatchViewModel @AssistedInject constructor(
         viewModelScope.launch(ioDispatcher) {
             val habbit = habbitRepository.getHabbit(habbitId)
             _uiState.emit(WatchUiState.Loaded(habbit))
+        }
+    }
+
+    fun onCompleted() {
+        viewModelScope.launch(ioDispatcher){
+            habbitRepository.insertLog(habbitId, Date(), "")
         }
     }
 

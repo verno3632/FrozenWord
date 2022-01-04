@@ -4,9 +4,12 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import java.util.Date
 import jp.developer.retia.frozenword.db.HabbitDao
+import jp.developer.retia.frozenword.db.LogDao
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
+import jp.developer.retia.frozenword.model.Log
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
@@ -16,7 +19,8 @@ import org.spekframework.spek2.style.specification.describe
 @OptIn(ExperimentalCoroutinesApi::class)
 object HabbitRepositorySpec : Spek({
     val mockHabbitDao by memoized { mockk<HabbitDao>(relaxUnitFun = true) }
-    val habbitRepository by memoized { HabbitRepository(mockHabbitDao) }
+    val mockLogDao by memoized { mockk<LogDao>(relaxUnitFun = true) }
+    val habbitRepository by memoized { HabbitRepository(mockHabbitDao, mockLogDao) }
 
     describe("insertAll") {
         val dummyHabbit = mockk<Habbit>()
@@ -29,6 +33,21 @@ object HabbitRepositorySpec : Spek({
         it("dummyHabbitsが渡される") {
             coVerify {
                 mockHabbitDao.insertAll(dummyHabbit)
+            }
+        }
+    }
+
+    describe("insertLog") {
+        val dummyDate = mockk<Date>()
+        beforeEachTest {
+            runTest {
+                habbitRepository.insertLog(12345, dummyDate, "message")
+            }
+        }
+
+        it("logが挿入される") {
+            coVerify {
+                mockLogDao.insert(Log(habbitId = 12345, time = dummyDate, message = "message"))
             }
         }
     }

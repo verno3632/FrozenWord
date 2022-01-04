@@ -10,4 +10,5 @@ import jp.developer.retia.frozenword.model.Log
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun habbitDao(): HabbitDao
+    abstract fun logDao(): LogDao
 }

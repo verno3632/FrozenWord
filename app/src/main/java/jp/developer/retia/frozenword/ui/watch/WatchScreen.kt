@@ -50,6 +50,7 @@ fun WatchScreen(
     trigger: String? = null,
     place: String? = null,
     modifier: Modifier = Modifier,
+    onCompleted: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -67,7 +68,7 @@ fun WatchScreen(
         }
         Text(simpleHabbitTitle, style = MaterialTheme.typography.h5)
 
-        IndicatorButton()
+        IndicatorButton(onCompleted)
     }
 }
 
@@ -108,17 +109,18 @@ fun PreviewDoneIndicatorButton() {
 }
 
 @Composable
-fun IndicatorButton() {
+fun IndicatorButton(onCompleted: () -> Unit = {}) {
     var state: IndicatorState by remember { mutableStateOf(IndicatorState.Waiting) }
     val composableScope = rememberCoroutineScope()
     IndicatorButton(indicatorState = state, onClickStartButton = {
         composableScope.launch {
             (0 until 599).forEach { passed ->
-                state = IndicatorState.Doing(600 - passed)
+                state = IndicatorState.Doing(599 - passed)
                 delay(100)
             }
 
             state = IndicatorState.Done
+            onCompleted()
         }
     })
 }

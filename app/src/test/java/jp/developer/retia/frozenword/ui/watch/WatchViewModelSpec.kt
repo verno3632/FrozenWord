@@ -2,7 +2,9 @@ package jp.developer.retia.frozenword.ui.watch
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import java.util.Date
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.repository.HabbitRepository
@@ -34,6 +36,16 @@ object WatchViewModelSpec : Spek({
     describe("init") {
         it("選択した習慣が表示される") {
             assertThat(watchViewModel.uiState.value).isEqualTo(WatchUiState.Loaded(habbit))
+        }
+    }
+
+    describe("onCompleted") {
+        beforeEachTest {
+            watchViewModel.onCompleted()
+        }
+
+        it("ログに追加される") {
+            coVerify { mockHabbitRepository.insertLog(12345, any(), "") }
         }
     }
 })

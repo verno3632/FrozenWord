@@ -67,7 +67,8 @@ fun WatchScreen(
                 title = s.habbit.title,
                 simpleHabbitTitle = s.habbit.simpleHabbitTitle,
                 trigger = s.habbit.trigger,
-                place = s.habbit.place
+                place = s.habbit.place,
+                onCompleted = watchViewModel::onCompleted
             )
     }
 }

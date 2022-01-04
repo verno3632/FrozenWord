@@ -1,11 +1,17 @@
 package jp.developer.retia.frozenword.repository
 
+import java.util.Date
 import javax.inject.Inject
 import jp.developer.retia.frozenword.db.HabbitDao
+import jp.developer.retia.frozenword.db.LogDao
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
+import jp.developer.retia.frozenword.model.Log
 
-class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
+class HabbitRepository @Inject constructor(
+    private val habbitDao: HabbitDao,
+    private val logDao: LogDao,
+) {
     suspend fun insert(
         title: String,
         simpleHabbitTitle: String,
@@ -40,5 +46,9 @@ class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
 
     suspend fun getHabbit(habbitId: Int): Habbit {
         return habbitDao.getHabbit(habbitId)
+    }
+
+    suspend fun insertLog(habbitId: Int, time: Date, message: String) {
+        logDao.insert(Log(habbitId = habbitId, time = time, message = message))
     }
 }
