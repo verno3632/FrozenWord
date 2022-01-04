@@ -37,4 +37,8 @@ class HabbitRepository @Inject constructor(private val habbitDao: HabbitDao) {
     suspend fun getHabbitAndLogs(): List<HabbitAndLog> {
         return habbitDao.getHabbitAndLogs()
     }
+
+    suspend fun getHabbit(habbitId: Int): Habbit {
+        return habbitDao.getHabbit(habbitId)
+    }
 }

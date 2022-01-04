@@ -12,22 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import jp.developer.retia.frozenword.extension.lazyWithExtras
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.launch
 
 @OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
 class WatchActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var assistedFactory: WatchViewModel.ViewModelAssistedFactory
+
     private val habbitId by lazyWithExtras<Int>(BUNDLE_KEY_ID)
+    private val watchViewModel: WatchViewModel by viewModels {
+        WatchViewModel.provideFactory(assistedFactory, habbitId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,7 @@ class WatchActivity : ComponentActivity() {
             FrozenWordTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    WatchScreen()
+                    WatchScreen(watchViewModel)
                 }
             }
         }
@@ -55,11 +57,17 @@ class WatchActivity : ComponentActivity() {
 
 @Composable
 fun WatchScreen(
+    watchViewModel: WatchViewModel
 ) {
-    WatchScreen(
-        title = "dummyTitle",
-        simpleHabbitTitle = "dummySimpleTitle",
-        trigger = "dummyTrigger",
-        place = "dummyPlace"
-    )
+    val state by watchViewModel.uiState.collectAsState()
+
+    when (val s = state) {
+        is WatchUiState.Loaded ->
+            WatchScreen(
+                title = s.habbit.title,
+                simpleHabbitTitle = s.habbit.simpleHabbitTitle,
+                trigger = s.habbit.trigger,
+                place = s.habbit.place
+            )
+    }
 }

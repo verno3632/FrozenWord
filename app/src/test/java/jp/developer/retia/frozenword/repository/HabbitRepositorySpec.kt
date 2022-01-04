@@ -9,6 +9,7 @@ import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -44,6 +45,21 @@ object HabbitRepositorySpec : Spek({
 
         it("dummyHabbitsが渡される") {
             assertThat(actual).isEqualTo(dummyHabbits)
+        }
+    }
+
+    describe("getHabbit") {
+        val dummyHabbit = mockk<Habbit>()
+        lateinit var actual: Habbit
+        beforeEachTest {
+            coEvery { mockHabbitDao.getHabbit(12345) } returns dummyHabbit
+            runTest {
+                actual = habbitRepository.getHabbit(12345)
+            }
+        }
+
+        it("dummyHabbitが渡される") {
+            assertThat(actual).isEqualTo(dummyHabbit)
         }
     }
 })
