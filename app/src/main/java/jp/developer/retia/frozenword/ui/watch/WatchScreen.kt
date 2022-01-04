@@ -145,7 +145,15 @@ fun IndicatorButton(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .align(alignment = Alignment.Center)
-                .clickable { onClickStartButton() }
+                .let {
+                    if (indicatorState is IndicatorState.Waiting) {
+                        it.clickable {
+                            onClickStartButton()
+                        }
+                    } else {
+                        it
+                    }
+                }
         )
         Text(
             message,
