@@ -45,11 +45,11 @@ fun PreviewHabbits() {
 
 @Composable
 fun WatchScreen(
+    modifier: Modifier = Modifier,
     title: String,
     simpleHabbitTitle: String,
     trigger: String? = null,
     place: String? = null,
-    modifier: Modifier = Modifier,
     onCompleted: () -> Unit = {}
 ) {
     Column(
