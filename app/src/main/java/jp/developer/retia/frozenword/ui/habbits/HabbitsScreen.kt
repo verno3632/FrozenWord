@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
+import jp.developer.retia.frozenword.model.Log
+import jp.developer.retia.frozenword.model.LogStreak
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlin.math.min
 
@@ -100,7 +102,8 @@ fun HabbitCard(
         simpleHabbitTitle = habbit.habbit.simpleHabbitTitle,
         trigger = habbit.habbit.trigger,
         place = habbit.habbit.place,
-        onClick = { onClickHabbitCard(habbit.habbit) }
+        onClick = { onClickHabbitCard(habbit.habbit) },
+        length = habbit.logs.size
     )
 }
 
@@ -111,6 +114,7 @@ fun HabbitCard(
     trigger: String? = null,
     place: String? = null,
     onClick: () -> Unit = {},
+    length: Int,
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier.padding(2.dp)) {
@@ -131,9 +135,15 @@ fun HabbitCard(
                 }
                 Text(simpleHabbitTitle, fontSize = 16.sp)
             }
-            TaskDots(modifier = Modifier.weight(1f), 24)
+            TaskDots(modifier = Modifier.weight(1f), length)
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewTaskDots() {
+    TaskDots(days = 5)
 }
 
 @Composable
@@ -143,22 +153,24 @@ fun TaskDots(modifier: Modifier = Modifier, days: Int) {
         repeat(columnSize) {
             Row {
                 repeat(7) {
-                    Row(
+                    Box(
                         modifier = Modifier
                             .width(12.dp)
                             .height(12.dp)
-                            .background(Color.Blue),
-                    ) {}
+                            .padding(1.dp)
+                            .background(Color.Blue)
+                    ) { }
                 }
             }
         }
         if (columnSize < 4) {
             Row {
                 repeat(days % 7) {
-                    Row(
+                    Box(
                         modifier = Modifier
                             .width(12.dp)
                             .height(12.dp)
+                            .padding(1.dp)
                             .background(Color.Blue)
                     ) {}
                 }

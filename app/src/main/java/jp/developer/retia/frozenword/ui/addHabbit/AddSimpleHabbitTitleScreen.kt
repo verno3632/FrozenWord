@@ -72,7 +72,8 @@ fun AddSimpleHabbitTitleScreen(
             simpleHabbitTitle = simpleHabbitTitle,
             title = habbit,
             trigger = "",
-            modifier = Modifier.offset(y = 16.dp)
+            modifier = Modifier.offset(y = 16.dp),
+            length = 1
         )
 
         Row(
