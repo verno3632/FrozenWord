@@ -19,7 +19,7 @@ import org.spekframework.spek2.style.specification.describe
 @OptIn(ExperimentalCoroutinesApi::class)
 object HabbitRepositorySpec : Spek({
     val mockHabbitDao by memoized { mockk<HabbitDao>(relaxUnitFun = true) }
-    val mockLogDao by memoized { mockk<LogDao>(relaxUnitFun = true) }
+    val mockLogDao by memoized { mockk<LogDao>(relaxed = true) }
     val habbitRepository by memoized { HabbitRepository(mockHabbitDao, mockLogDao) }
 
     describe("insertAll") {
