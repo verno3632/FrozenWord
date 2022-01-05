@@ -154,7 +154,7 @@ fun IndicatorButton(onCompleted: () -> Unit = {}) {
     val composableScope = rememberCoroutineScope()
     IndicatorButton(indicatorState = state, onClickStartButton = {
         composableScope.launch {
-            (0 until 1).forEach { passed ->
+            (0 until 599).forEach { passed ->
                 state = IndicatorState.Doing(599 - passed)
                 delay(100)
             }
