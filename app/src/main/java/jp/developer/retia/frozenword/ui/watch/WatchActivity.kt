@@ -12,12 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import jp.developer.retia.frozenword.extension.lazyWithExtras
 import jp.developer.retia.frozenword.model.Habbit
+import jp.developer.retia.frozenword.ui.addHabbit.AddHabbitEvent
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
@@ -39,6 +44,16 @@ class WatchActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     WatchScreen(watchViewModel)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                watchViewModel.events.collect { event ->
+                    when (event) {
+                        WatchEvent.Back -> onBackPressed()
+                    }
                 }
             }
         }
