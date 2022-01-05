@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import jp.developer.retia.frozenword.model.Log
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -72,6 +75,43 @@ fun WatchScreen(
     }
 }
 
+@Composable
+fun EditMemoScreen(
+    logId: Int,
+    memo: String,
+    onButtonClicked: (Int, String) -> Unit = { _, _ -> }
+) {
+    val (text, setText) = remember { mutableStateOf(memo) }
+    EditMemoScreen(
+        memo = text,
+        onMemoEdited = setText,
+        onButtonClicked = { onButtonClicked(logId, text) })
+}
+
+@Composable
+fun EditMemoScreen(
+    modifier: Modifier = Modifier,
+    memo: String,
+    onMemoEdited: (String) -> Unit = {},
+    onButtonClicked: () -> Unit = {}
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text("本日分完了", style = MaterialTheme.typography.h6)
+        Text("メモを残そう", style = MaterialTheme.typography.h6)
+        TextField(value = memo, onValueChange = onMemoEdited)
+        Button(onClick = onButtonClicked) {
+            Text("保存")
+        }
+    }
+
+}
+
 sealed class IndicatorState {
     object Waiting : IndicatorState()
     data class Doing(@IntRange(from = 1, to = 600) val remainingTime: Int) : IndicatorState()
@@ -114,7 +154,7 @@ fun IndicatorButton(onCompleted: () -> Unit = {}) {
     val composableScope = rememberCoroutineScope()
     IndicatorButton(indicatorState = state, onClickStartButton = {
         composableScope.launch {
-            (0 until 599).forEach { passed ->
+            (0 until 1).forEach { passed ->
                 state = IndicatorState.Doing(599 - passed)
                 delay(100)
             }

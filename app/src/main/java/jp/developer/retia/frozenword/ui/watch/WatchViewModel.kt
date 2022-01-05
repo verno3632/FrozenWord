@@ -8,6 +8,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import java.util.Date
 import jp.developer.retia.frozenword.model.Habbit
+import jp.developer.retia.frozenword.model.Log
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +38,15 @@ class WatchViewModel @AssistedInject constructor(
 
     fun onCompleted() {
         viewModelScope.launch(ioDispatcher) {
-            habbitRepository.insertLog(habbitId, Date(), "")
+            val logId = habbitRepository.insertLog(habbitId, Date(), "")
+            _uiState.emit(WatchUiState.EditMemo(logId.toInt(), ""))
+        }
+    }
+
+    fun onMemoSaved(logId: Int, message: String) {
+        viewModelScope.launch(ioDispatcher) {
+            habbitRepository.updateMessage(logId, message)
+
         }
     }
 
@@ -57,4 +66,5 @@ class WatchViewModel @AssistedInject constructor(
 sealed class WatchUiState {
     object NotLoaded : WatchUiState()
     data class Loaded(val habbit: Habbit) : WatchUiState()
+    data class EditMemo(val logId: Int, val message: String) : WatchUiState()
 }

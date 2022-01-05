@@ -70,5 +70,11 @@ fun WatchScreen(
                 place = s.habbit.place,
                 onCompleted = watchViewModel::onCompleted
             )
+        is WatchUiState.EditMemo ->
+            EditMemoScreen(
+                logId = s.logId,
+                memo = s.message,
+                onButtonClicked = watchViewModel::onMemoSaved
+            )
     }
 }
