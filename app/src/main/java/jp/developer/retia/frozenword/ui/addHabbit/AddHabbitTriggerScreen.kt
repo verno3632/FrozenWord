@@ -76,7 +76,8 @@ fun AddHabbitTriggerScreen(
             title = habbit,
             simpleHabbitTitle = simpleHabbitTitle,
             trigger = trigger,
-            modifier = Modifier.offset(y = 16.dp)
+            modifier = Modifier.offset(y = 16.dp),
+            length = 3
         )
 
         Row(
