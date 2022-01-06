@@ -108,7 +108,6 @@ fun EditMemoScreen(
             Text("保存")
         }
     }
-
 }
 
 sealed class IndicatorState {
