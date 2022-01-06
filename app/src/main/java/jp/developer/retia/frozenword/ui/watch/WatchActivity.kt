@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import jp.developer.retia.frozenword.extension.lazyWithExtras
 import jp.developer.retia.frozenword.model.Habbit
-import jp.developer.retia.frozenword.ui.addHabbit.AddHabbitEvent
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
