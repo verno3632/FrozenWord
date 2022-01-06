@@ -84,7 +84,8 @@ fun EditMemoScreen(
     EditMemoScreen(
         memo = text,
         onMemoEdited = setText,
-        onButtonClicked = { onButtonClicked(logId, text) })
+        onButtonClicked = { onButtonClicked(logId, text) }
+    )
 }
 
 @Composable
