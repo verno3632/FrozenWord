@@ -8,7 +8,6 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import java.util.Date
 import jp.developer.retia.frozenword.model.Habbit
-import jp.developer.retia.frozenword.model.Log
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.ui.addHabbit.AddHabbitEvent
 import kotlinx.coroutines.CoroutineDispatcher
