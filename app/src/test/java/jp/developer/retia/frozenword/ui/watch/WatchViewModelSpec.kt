@@ -1,8 +1,10 @@
 package jp.developer.retia.frozenword.ui.watch
 
+import androidx.lifecycle.SavedStateHandle
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.repository.HabbitRepository
@@ -17,9 +19,15 @@ object WatchViewModelSpec : Spek({
     val habbit = mockk<Habbit>()
     val testCoroutineDispatcher = TestCoroutineDispatcher()
     val mockHabbitRepository by memoized { mockk<HabbitRepository>(relaxUnitFun = true) }
+    val mockSaveStateHandle by memoized {
+        mockk<SavedStateHandle> {
+            every { get<Int>(WatchActivity.BUNDLE_KEY_ID) } returns 12345
+
+        }
+    }
     val watchViewModel by memoized {
         WatchViewModel(
-            12345,
+            mockSaveStateHandle,
             mockHabbitRepository,
             testCoroutineDispatcher
         )
