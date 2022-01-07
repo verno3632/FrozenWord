@@ -22,7 +22,6 @@ object WatchViewModelSpec : Spek({
     val mockSaveStateHandle by memoized {
         mockk<SavedStateHandle> {
             every { get<Int>(WatchActivity.BUNDLE_KEY_ID) } returns 12345
-
         }
     }
     val watchViewModel by memoized {
