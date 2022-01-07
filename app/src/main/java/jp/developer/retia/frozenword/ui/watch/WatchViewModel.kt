@@ -1,12 +1,11 @@
 package jp.developer.retia.frozenword.ui.watch
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
+import javax.inject.Inject
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,15 +17,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class WatchViewModel @AssistedInject constructor(
-    @Assisted private val habbitId: Int,
+@HiltViewModel
+class WatchViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val habbitRepository: HabbitRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    @AssistedFactory
-    interface ViewModelAssistedFactory {
-        fun create(habbitId: Int): WatchViewModel
-    }
+
+    private val habbitId by lazy { requireNotNull(savedStateHandle.get<Int>(WatchActivity.BUNDLE_KEY_ID)) }
 
     private val _uiState = MutableStateFlow<WatchUiState>(WatchUiState.NotLoaded)
     val uiState: StateFlow<WatchUiState> = _uiState.asStateFlow()
@@ -53,18 +51,6 @@ class WatchViewModel @AssistedInject constructor(
             habbitRepository.updateMessage(logId, message)
 
             _events.emit(WatchEvent.Back)
-        }
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: ViewModelAssistedFactory,
-            habbitId: Int
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return assistedFactory.create(habbitId) as T
-            }
         }
     }
 }

@@ -16,8 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import jp.developer.retia.frozenword.extension.lazyWithExtras
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -27,13 +25,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class WatchActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var assistedFactory: WatchViewModel.ViewModelAssistedFactory
-
-    private val habbitId by lazyWithExtras<Int>(BUNDLE_KEY_ID)
-    private val watchViewModel: WatchViewModel by viewModels {
-        WatchViewModel.provideFactory(assistedFactory, habbitId)
-    }
+    private val watchViewModel: WatchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +51,7 @@ class WatchActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val BUNDLE_KEY_ID = "id"
+        const val BUNDLE_KEY_ID = "id"
         fun createIntent(context: Context, habbit: Habbit): Intent =
             Intent(context, WatchActivity::class.java).apply {
                 putExtras(
