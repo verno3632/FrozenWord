@@ -74,6 +74,7 @@ fun WatchScreen(
                 simpleHabbitTitle = s.habbit.simpleHabbitTitle,
                 trigger = s.habbit.trigger,
                 place = s.habbit.place,
+                logs = s.logs,
                 onCompleted = watchViewModel::onCompleted
             )
         is WatchUiState.EditMemo ->

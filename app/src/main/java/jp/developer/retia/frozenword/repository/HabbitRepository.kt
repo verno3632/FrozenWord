@@ -48,6 +48,10 @@ class HabbitRepository @Inject constructor(
         return habbitDao.getHabbit(habbitId)
     }
 
+    suspend fun getHabbitAndLog(habbitId: Int): HabbitAndLog{
+        return habbitDao.getHabbitAndLog(habbitId)
+    }
+
     suspend fun insertLog(habbitId: Int, time: Date, message: String): Long {
         return logDao.insert(Log(habbitId = habbitId, time = time, message = message))
     }
