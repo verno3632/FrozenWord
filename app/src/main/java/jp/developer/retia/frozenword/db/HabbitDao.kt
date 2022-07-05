@@ -7,6 +7,9 @@ import jp.developer.retia.frozenword.model.HabbitAndLog
 
 @Dao
 interface HabbitDao {
+    @Query("SELECT * FROM habbit WHERE id = :habbitId")
+    suspend fun getHabbit(habbitId: Int): Habbit
+
     @Query("SELECT * FROM habbit")
     suspend fun getAll(): List<Habbit>
 

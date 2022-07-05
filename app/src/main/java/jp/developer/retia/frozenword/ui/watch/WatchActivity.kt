@@ -1,4 +1,4 @@
-package jp.developer.retia.frozenword.ui.addHabbit
+package jp.developer.retia.frozenword.ui.watch
 
 import android.content.Context
 import android.content.Intent
@@ -11,20 +11,21 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
+import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
 @OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
-class AddHabbitActivity : ComponentActivity() {
+class WatchActivity : ComponentActivity() {
 
-    private val addHabbitViewModel: AddHabbitViewModel by viewModels()
+    private val watchViewModel: WatchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,16 +34,16 @@ class AddHabbitActivity : ComponentActivity() {
             FrozenWordTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    AddHabbitScreen()
+                    WatchScreen(watchViewModel)
                 }
             }
         }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                addHabbitViewModel.events.collect { event ->
+                watchViewModel.events.collect { event ->
                     when (event) {
-                        AddHabbitEvent.Back -> onBackPressed()
+                        WatchEvent.Back -> onBackPressed()
                     }
                 }
             }
@@ -50,26 +51,36 @@ class AddHabbitActivity : ComponentActivity() {
     }
 
     companion object {
-        fun createIntent(context: Context): Intent = Intent(context, AddHabbitActivity::class.java)
+        const val BUNDLE_KEY_ID = "id"
+        fun createIntent(context: Context, habbit: Habbit): Intent =
+            Intent(context, WatchActivity::class.java).apply {
+                putExtras(
+                    bundleOf(BUNDLE_KEY_ID to habbit.id)
+                )
+            }
     }
 }
 
 @Composable
-fun AddHabbitScreen(addHabbitViewModel: AddHabbitViewModel = viewModel()) {
-    val state by addHabbitViewModel.uiState.collectAsState()
+fun WatchScreen(
+    watchViewModel: WatchViewModel
+) {
+    val state by watchViewModel.uiState.collectAsState()
 
-    AddHabbitScreen(
-        state = state,
-        onSuggestionClicked = addHabbitViewModel::onSuggestionHabbitTitleClicked,
-        onTitleNextButtonClicked = addHabbitViewModel::onHabbitTitleNextButtonClicked,
-
-        onSimpleHabbitTitleCompleteClicked = addHabbitViewModel::onSimpleHabbitTitleCompleteClicked,
-        onNextClicked = addHabbitViewModel::onSimpleHabbitTitleNextButtonClicked,
-
-        onHabbitTriggerCompleteClicked = addHabbitViewModel::onHabbitTriggerCompleteClicked,
-        onHabbitTriggerNextClicked = addHabbitViewModel::onHabbitTriggerNextButtonClicked,
-
-        onHabbitPlaceCompleteClicked = addHabbitViewModel::onHabbitPlaceCompleteClicked,
-        onHabbitPlaceNextClicked = {},
-    )
+    when (val s = state) {
+        is WatchUiState.Loaded ->
+            WatchScreen(
+                title = s.habbit.title,
+                simpleHabbitTitle = s.habbit.simpleHabbitTitle,
+                trigger = s.habbit.trigger,
+                place = s.habbit.place,
+                onCompleted = watchViewModel::onCompleted
+            )
+        is WatchUiState.EditMemo ->
+            EditMemoScreen(
+                logId = s.logId,
+                memo = s.message,
+                onButtonClicked = watchViewModel::onMemoSaved
+            )
+    }
 }

@@ -2,6 +2,7 @@ package jp.developer.retia.frozenword.ui.habbits
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jp.developer.retia.frozenword.model.Habbit
 import jp.developer.retia.frozenword.model.HabbitAndLog
+import jp.developer.retia.frozenword.model.Log
+import jp.developer.retia.frozenword.model.LogStreak
 import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 import kotlin.math.min
 
@@ -24,9 +27,33 @@ fun PreviewHabbits() {
         Surface {
             Habbits(
                 listOf(
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
-                    HabbitAndLog(Habbit(title = "hogehoge", trigger = "まるまるしたら"), emptyList()),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "何何する",
+                            place = "どこどこで"
+                        ),
+                        emptyList()
+                    ),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "なになにする",
+                            place = "どこどこで"
+                        ),
+                        emptyList()
+                    ),
+                    HabbitAndLog(
+                        Habbit(
+                            title = "hogehoge",
+                            trigger = "まるまるしたら",
+                            simpleHabbitTitle = "なになにする",
+                            place = "どこどこで"
+                        ),
+                        emptyList()
+                    ),
                 )
             )
         }
@@ -36,11 +63,14 @@ fun PreviewHabbits() {
 @Composable
 fun HabbitsScreen(
     uiState: HabbitsUiState,
-    onClickActionButton: (() -> Unit) = {}
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     when (uiState) {
         is HabbitsUiState.Loaded -> {
-            Habbits(habbits = uiState.habbits, onClickActionButton)
+            Habbits(
+                habbits = uiState.habbits,
+                onClickHabbitCard = onClickHabbitCard,
+            )
         }
     }
 }
@@ -49,7 +79,7 @@ fun HabbitsScreen(
 @Composable
 fun Habbits(
     habbits: List<HabbitAndLog>,
-    onClickActionButton: (() -> Unit) = {}
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -57,22 +87,63 @@ fun Habbits(
             .wrapContentHeight()
     ) {
         items(habbits) { habbit ->
-            Card(modifier = Modifier.padding(2.dp)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(8.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(habbit.habbit.trigger, fontSize = 13.sp)
-                        Text(habbit.habbit.title, fontSize = 16.sp)
-                    }
-                    TaskDots(modifier = Modifier.weight(1f), 24)
-                }
-            }
+            HabbitCard(habbit = habbit, onClickHabbitCard = onClickHabbitCard)
         }
     }
+}
+
+@Composable
+fun HabbitCard(
+    habbit: HabbitAndLog,
+    onClickHabbitCard: ((Habbit) -> Unit) = {}
+) {
+    HabbitCard(
+        title = habbit.habbit.title,
+        simpleHabbitTitle = habbit.habbit.simpleHabbitTitle,
+        trigger = habbit.habbit.trigger,
+        place = habbit.habbit.place,
+        onClick = { onClickHabbitCard(habbit.habbit) },
+        length = habbit.logs.size
+    )
+}
+
+@Composable
+fun HabbitCard(
+    title: String,
+    simpleHabbitTitle: String,
+    trigger: String? = null,
+    place: String? = null,
+    onClick: () -> Unit = {},
+    length: Int,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier.padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .clickable { onClick() }
+                .padding(8.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, fontSize = 12.sp)
+                trigger?.let {
+                    Text(trigger, fontSize = 12.sp)
+                }
+                place?.let {
+                    Text(place + "で", fontSize = 12.sp)
+                }
+                Text(simpleHabbitTitle, fontSize = 16.sp)
+            }
+            TaskDots(modifier = Modifier.weight(1f), length)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewTaskDots() {
+    TaskDots(days = 5)
 }
 
 @Composable
@@ -82,22 +153,24 @@ fun TaskDots(modifier: Modifier = Modifier, days: Int) {
         repeat(columnSize) {
             Row {
                 repeat(7) {
-                    Row(
+                    Box(
                         modifier = Modifier
                             .width(12.dp)
                             .height(12.dp)
-                            .background(Color.Blue),
-                    ) {}
+                            .padding(1.dp)
+                            .background(Color.Blue)
+                    ) { }
                 }
             }
         }
         if (columnSize < 4) {
             Row {
                 repeat(days % 7) {
-                    Row(
+                    Box(
                         modifier = Modifier
                             .width(12.dp)
                             .height(12.dp)
+                            .padding(1.dp)
                             .background(Color.Blue)
                     ) {}
                 }

@@ -1,9 +1,7 @@
 package jp.developer.retia.frozenword.ui.addHabbit
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -19,20 +17,47 @@ import jp.developer.retia.frozenword.ui.theme.FrozenWordTheme
 @Composable
 fun AddHabbitScreen(
     state: AddHabbitUiState,
-    onTitleChanged: (String) -> Unit = {},
     onSuggestionClicked: (String) -> Unit = {},
-    onTitleNextButtonClicked: () -> Unit = {},
+    onTitleNextButtonClicked: (String) -> Unit = {},
+
+    onSimpleHabbitTitleCompleteClicked: (String) -> Unit = {},
+    onNextClicked: (String) -> Unit = {},
+
+    onHabbitTriggerCompleteClicked: (String) -> Unit = {},
+    onHabbitTriggerNextClicked: (String) -> Unit = {},
+
+    onHabbitPlaceCompleteClicked: (String) -> Unit = {},
+    onHabbitPlaceNextClicked: (String) -> Unit = {}
 ) {
     when (state) {
         is AddHabbitUiState.HabbitTitlePage ->
             FirstPane(
                 defaultTitle = state.title,
                 sampleTitles = state.sampleTitle,
-                onTitleChanged = onTitleChanged,
                 onSuggestionClicked = onSuggestionClicked,
                 onTitleNextButtonClicked = onTitleNextButtonClicked,
             )
-        is AddHabbitUiState.ShortHabbitTitlePage -> TODO()
+        is AddHabbitUiState.SimpleHabbitTitlePage ->
+            AddSimpleHabbitTitleScreen(
+                habbit = state.title,
+                onSimpleHabbitTitleCompleteClicked = onSimpleHabbitTitleCompleteClicked,
+                onNextClicked = onNextClicked
+            )
+        is AddHabbitUiState.HabbitTriggerPage ->
+            AddHabbitTriggerScreen(
+                habbit = state.title,
+                simpleHabbitTitle = state.simpleHabbitTitle,
+                onHabbitTriggerCompleteClicked = onHabbitTriggerCompleteClicked,
+                onHabbitTriggerNextClicked = onHabbitTriggerNextClicked
+            )
+        is AddHabbitUiState.HabbitPlacePage ->
+            AddHabbitPlaceScreen(
+                habbit = state.title,
+                simpleHabbitTitle = state.simpleHabbitTitle,
+                trigger = state.trigger,
+                onHabbitPlaceCompleteClicked = onHabbitPlaceCompleteClicked,
+                onHabbitPlaceNextClicked = onHabbitPlaceNextClicked
+            )
         is AddHabbitUiState.TitlePage -> TODO()
     }
 }
@@ -51,22 +76,31 @@ fun PreviewFirstPane() {
 fun FirstPane(
     defaultTitle: String,
     sampleTitles: List<String>,
-    onTitleChanged: (String) -> Unit = {},
     onSuggestionClicked: (String) -> Unit = {},
-    onTitleNextButtonClicked: () -> Unit = {},
+    onTitleNextButtonClicked: (String) -> Unit = {},
 ) {
-    var title: String by remember { mutableStateOf(defaultTitle) }
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("継続したいことは？")
+    val (title, setTitle) = remember { mutableStateOf(defaultTitle) }
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        Text(
+            "継続したいことは？",
+            style = MaterialTheme.typography.h6,
+        )
         OutlinedTextField(
+            modifier = Modifier.padding(top = 32.dp),
             value = title,
-            onValueChange = {
-                title = it
-                onTitleChanged(title)
-            }
+            onValueChange = setTitle
         )
         sampleTitles.take(3).forEach { Chip(it, onSuggestionClicked) }
-        Button(onClick = onTitleNextButtonClicked) {
+        Button(
+            modifier = Modifier.padding(top = 16.dp),
+            onClick = { onTitleNextButtonClicked(title) }
+        ) {
             Text("次へ")
         }
     }

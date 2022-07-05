@@ -17,43 +17,157 @@ object AddHabbitViewModelSpec : Spek({
     val addHabbitViewModel by memoized { AddHabbitViewModel(mockHabbitRepository) }
     setMainDispatcher()
 
-    describe("onHabbitTitleUpdated") {
+    describe("onHabbitTitleNextButtonClicked") {
         val title = "title1"
+        lateinit var actual: List<AddHabbitUiState>
         beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                }
+            }
         }
 
-        it("dummyHabbitsが渡される") {
-            assertThat(addHabbitViewModel.uiState.value).isEqualTo(
-                AddHabbitUiState.HabbitTitlePage(
+        it("simpleHabbitTitle画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.SimpleHabbitTitlePage(
                     title,
-                    emptyList(),
-                    true
+                    emptyList()
                 )
             )
         }
     }
 
-    describe("onHabbitTitleUpdated") {
+    describe("onSipmpleHabbitTitleCompleteClicked") {
         val title = "title1"
+        val simpleTitle = "simpleTitle"
         lateinit var actual: List<AddHabbitEvent>
         beforeEachTest {
-            addHabbitViewModel.onHabbitTitleUpdated("title1")
             runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
                 actual = addHabbitViewModel.events.toList {
-                    addHabbitViewModel.onHabbitTitleNextButtonClicked()
+                    addHabbitViewModel.onSimpleHabbitTitleCompleteClicked(simpleTitle)
                 }
             }
         }
 
-        it("Habbitsが保存される") {
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
             coVerify {
-                mockHabbitRepository.insert(title = title, trigger = "")
+                mockHabbitRepository.insert(title, simpleTitle, "", "")
+            }
+        }
+    }
+
+    describe("onSimpleHabbitTitleNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+                }
             }
         }
 
-        it("closeが降ってくる") {
-            assertThat(actual).isEqualTo(listOf(AddHabbitEvent.Back))
+        it("トリガー画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitTriggerPage(
+                    title,
+                    simpleHabbitTitle
+                )
+            )
+        }
+    }
+
+    describe("onHabbitTriggerCompleteClicked") {
+        val title = "title1"
+        val simpleTitle = "simpleTitle"
+        val trigger = "trigger"
+        lateinit var actual: List<AddHabbitEvent>
+        beforeEachTest {
+            runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleTitle)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onHabbitTriggerCompleteClicked(trigger)
+                }
+            }
+        }
+
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle, trigger, "")
+            }
+        }
+    }
+
+    describe("onHabbitTriggerNextButtonClicked") {
+        val title = "title1"
+        val simpleHabbitTitle = "simpleHabbitTitle"
+        val trigger = "trigger"
+        lateinit var actual: List<AddHabbitUiState>
+        beforeEachTest {
+            addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+            addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleHabbitTitle)
+            runBlockingTest {
+                actual = addHabbitViewModel.uiState.toList {
+                    addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                }
+            }
+        }
+
+        it("場所入力画面へ遷移") {
+            assertThat(actual[1]).isEqualTo(
+                AddHabbitUiState.HabbitPlacePage(
+                    title,
+                    simpleHabbitTitle,
+                    trigger
+                )
+            )
+        }
+    }
+
+    describe("onHabbitPlaceCompleteClicked") {
+        val title = "title1"
+        val simpleTitle = "simpleTitle"
+        val trigger = "trigger"
+        val place = "place"
+        lateinit var actual: List<AddHabbitEvent>
+        beforeEachTest {
+            runBlockingTest {
+                addHabbitViewModel.onHabbitTitleNextButtonClicked(title)
+                addHabbitViewModel.onSimpleHabbitTitleNextButtonClicked(simpleTitle)
+                addHabbitViewModel.onHabbitTriggerNextButtonClicked(trigger)
+                actual = addHabbitViewModel.events.toList {
+                    addHabbitViewModel.onHabbitPlaceCompleteClicked(place)
+                }
+            }
+        }
+
+        it("戻る") {
+            assertThat(actual[0]).isEqualTo(
+                AddHabbitEvent.Back
+            )
+        }
+
+        it("習慣が保存される") {
+            coVerify {
+                mockHabbitRepository.insert(title, simpleTitle, trigger, place)
+            }
         }
     }
 })
