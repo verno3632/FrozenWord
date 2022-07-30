@@ -26,7 +26,7 @@ fun PreviewHabbits() {
     FrozenWordTheme {
         Surface {
             Habbits(
-                listOf(
+                habbits = listOf(
                     HabbitAndLog(
                         Habbit(
                             title = "hogehoge",
@@ -62,12 +62,14 @@ fun PreviewHabbits() {
 
 @Composable
 fun HabbitsScreen(
+    modifier: Modifier = Modifier,
     uiState: HabbitsUiState,
     onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     when (uiState) {
         is HabbitsUiState.Loaded -> {
             Habbits(
+                modifier = modifier,
                 habbits = uiState.habbits,
                 onClickHabbitCard = onClickHabbitCard,
             )
@@ -78,11 +80,12 @@ fun HabbitsScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Habbits(
+    modifier: Modifier = Modifier,
     habbits: List<HabbitAndLog>,
     onClickHabbitCard: ((Habbit) -> Unit) = {}
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .background(Color.Gray)
             .wrapContentHeight()
     ) {
