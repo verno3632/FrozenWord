@@ -1,6 +1,6 @@
 ext {
     kotlinVersion = '1.5.31'
-    androidStudioVersion = '7.2.0-alpha03'
+    androidStudioVersion = '7.2.1'
     ktlintGradleVersion = '10.2.0'
     coroutinesVersion = '1.6.0'
     appcompatVersion = '1.3.0'
