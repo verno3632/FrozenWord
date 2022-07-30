@@ -74,7 +74,8 @@ fun WatchScreen(
         scaffoldState = scaffoldState,
         sheetContent = {
             LogsScreen(logs = logs)
-        }) {
+        }
+    ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
