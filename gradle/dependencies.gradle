@@ -12,7 +12,7 @@ ext {
     navigationVersion = '2.4.0-alpha01'
     accompanistVersion = '0.20.3'
     hiltVersion = '2.42'
-    roomVersion = '2.3.0'
+    roomVersion = '2.4.3'
     androidxJunitVersion = '1.1.2'
     espressoVersion = '3.3.0'
     spekVersion = '2.0.18'
