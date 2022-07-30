@@ -28,4 +28,8 @@ interface HabbitDao {
     @Transaction
     @Query("SELECT * FROM Habbit")
     fun getHabbitAndLogs(): List<HabbitAndLog>
+
+    @Transaction
+    @Query("SELECT * FROM Habbit WHERE id = :habbitId")
+    fun getHabbitAndLog(habbitId: Int): HabbitAndLog
 }

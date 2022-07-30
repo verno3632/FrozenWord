@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
 import jp.developer.retia.frozenword.model.Habbit
+import jp.developer.retia.frozenword.model.Log
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,7 +36,8 @@ class WatchViewModel @Inject constructor(
     init {
         viewModelScope.launch(ioDispatcher) {
             val habbit = habbitRepository.getHabbit(habbitId)
-            _uiState.emit(WatchUiState.Loaded(habbit))
+            val habbitAndLog = habbitRepository.getHabbitAndLog(habbitId)
+            _uiState.emit(WatchUiState.Loaded(habbit, habbitAndLog.logs))
         }
     }
 
@@ -57,7 +59,7 @@ class WatchViewModel @Inject constructor(
 
 sealed class WatchUiState {
     object NotLoaded : WatchUiState()
-    data class Loaded(val habbit: Habbit) : WatchUiState()
+    data class Loaded(val habbit: Habbit, val logs: List<Log>) : WatchUiState()
     data class EditMemo(val logId: Int, val message: String) : WatchUiState()
 }
 
