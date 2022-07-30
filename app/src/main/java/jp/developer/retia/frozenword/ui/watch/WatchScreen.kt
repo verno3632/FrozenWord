@@ -179,7 +179,8 @@ fun LogCard(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             val endLineWidth = if (showTopLine) 2 else 0
             Divider(
-                color = Color.Red, modifier = Modifier
+                color = Color.Red,
+                modifier = Modifier
                     .height(16.dp)
                     .width(endLineWidth.dp)
             )
