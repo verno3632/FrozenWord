@@ -82,5 +82,6 @@ fun WatchScreen(
                 memo = s.message,
                 onButtonClicked = watchViewModel::onMemoSaved
             )
+        WatchUiState.NotLoaded -> TODO()
     }
 }
