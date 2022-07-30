@@ -7,6 +7,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import jp.developer.retia.frozenword.model.Habbit
+import jp.developer.retia.frozenword.model.HabbitAndLog
 import jp.developer.retia.frozenword.repository.HabbitRepository
 import jp.developer.retia.frozenword.setMainDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,12 +34,21 @@ object WatchViewModelSpec : Spek({
     }
     beforeEachTest {
         coEvery { mockHabbitRepository.getHabbit(12345) } returns habbit
+        coEvery { mockHabbitRepository.getHabbitAndLog(12345) } returns HabbitAndLog(
+            habbit,
+            emptyList()
+        )
     }
     setMainDispatcher(testCoroutineDispatcher)
 
     describe("init") {
         it("選択した習慣が表示される") {
-            assertThat(watchViewModel.uiState.value).isEqualTo(WatchUiState.Loaded(habbit))
+            assertThat(watchViewModel.uiState.value).isEqualTo(
+                WatchUiState.Loaded(
+                    habbit,
+                    emptyList()
+                )
+            )
         }
     }
 
