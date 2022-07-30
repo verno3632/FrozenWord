@@ -147,7 +147,6 @@ fun LogsScreen(modifier: Modifier = Modifier, logs: List<Log>) {
                 showTopLine = before != null && item.time.date - 1 == before.time.date
             )
         }
-
     }
 }
 
