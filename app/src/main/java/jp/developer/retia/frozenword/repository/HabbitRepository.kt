@@ -48,7 +48,7 @@ class HabbitRepository @Inject constructor(
         return habbitDao.getHabbit(habbitId)
     }
 
-    suspend fun getHabbitAndLog(habbitId: Int): HabbitAndLog{
+    suspend fun getHabbitAndLog(habbitId: Int): HabbitAndLog {
         return habbitDao.getHabbitAndLog(habbitId)
     }
 
