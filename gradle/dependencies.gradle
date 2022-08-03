@@ -12,7 +12,7 @@ ext {
     activityVersion = '1.5.1'
     navigationVersion = '2.4.0-alpha01'
     accompanistVersion = '0.25.0'
-    hiltVersion = '2.43.1'
+    hiltVersion = '2.43.2'
     roomVersion = '2.4.3'
     androidxJunitVersion = '1.1.2'
     espressoVersion = '3.3.0'
